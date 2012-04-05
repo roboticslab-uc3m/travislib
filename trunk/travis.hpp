@@ -1,5 +1,5 @@
-#ifndef TRAVIS_H
-#define TRAVIS_H
+#ifndef TRAVIS_HPP
+#define TRAVIS_HPP
 
 	/**
     * \defgroup Travis
