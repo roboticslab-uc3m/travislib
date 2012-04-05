@@ -4,7 +4,7 @@
 // License: LGPL v3 or later. License available at GNU (http://www.gnu.org/licenses/lgpl.html)
 // For more license information see attached files: LicenseOpencv.txt and LicenseTravis.txt
 
-#include "travis.h"
+#include "travis.hpp"
 
 void OptFlowDetec(){
 
