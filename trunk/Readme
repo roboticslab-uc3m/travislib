@@ -1,0 +1,14 @@
+Travis.h
+
+Engineered by Santiago Morante (Final Degree Project - 2012)
+
+@ Universidad Carlos III de Madrid (http://www.uc3m.es)
+@ Asociación de Robótica Uc3m (http://asrob.uc3m.es)
+
+--- License ---
+
+This software is released under the GNU Lesser General Public License, LGPL v3 or later. License available at GNU (http://www.gnu.org/licenses/lgpl.html). For more information see attached files: LicenseOpencv.txt and LicenseTravis.txt
+
+--- About Travis ---
+
+Travis Library (TRAcking VISion) is a collection of functions based on OpenCV. The functions include tracking, navigation, and motion detection features.
