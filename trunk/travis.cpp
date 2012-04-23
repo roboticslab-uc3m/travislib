@@ -236,7 +236,7 @@ void NaviColor()
                 else if (rightcomp < centcomp && rightcomp < leftcomp)
                     rectangle(frame,right,Scalar(0,255,255),2);
 
-                else(centcomp <= leftcomp && centcomp <= rightcomp)
+                else if(centcomp <= leftcomp && centcomp <= rightcomp)
                     rectangle(frame,center,Scalar(0,255,255),2);
 
                 imshow("Navicolor Robot Vision", backproj);
