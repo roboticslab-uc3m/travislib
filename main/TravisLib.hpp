@@ -42,7 +42,7 @@ public:
     /**
      * Constructor.
      */
-    Travis();
+    Travis() {}
 
     /**
      * Configure the object and make it connect to a colorXxx module by port name.
