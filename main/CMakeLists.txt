@@ -1,10 +1,15 @@
+# Authors: Santiago Morante; Juan G. Victores
 
+# reduce warning level with cmake 2.6
 cmake_minimum_required(VERSION 2.6)
+#cmake policies
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
+project(travis)
 
 set(KEYWORD "TravisLib")
-
-# Start a project.
-project(${KEYWORD})
 
 # Find OpenCV.
 find_package(OpenCV REQUIRED)
@@ -28,4 +33,9 @@ if (folder_source)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
+
+# export our variables to a TRAVISConfig.cmake creation
+set(TRAVIS_LINK_DIRS ${TRAVIS_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
+configure_file(${CMAKE_SOURCE_DIR}/conf/template/TRAVISConfig.cmake.in
+               ${CMAKE_BINARY_DIR}/TRAVISConfig.cmake @ONLY)
 
