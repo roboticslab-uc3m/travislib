@@ -36,6 +36,7 @@ using namespace cv;
 class Travis {
 protected:
     bool isQuiet;
+    cv::Mat _img;
 
 public:
 
@@ -52,25 +53,12 @@ public:
     bool setCvMat(const cv::Mat& image, bool quiet=true);
 
     /**
-     * Configure the object.
-     * @param quiet suppress messages displayed upon success/failure.
-     * @return true if the object and connection was created successfully.
-     */
-    bool setIplImage(const IplImage& image, bool quiet=true);
-
-    /**
      * Get the current state.
      * @param quiet suppress messages displayed upon success/failure.
      * @return true if the object and connection was created successfully.
      */
-    cv::Mat* getCvMat();
+    cv::Mat& getCvMat();
 
-    /**
-     * Get the current state.
-     * @param quiet suppress messages displayed upon success/failure.
-     * @return true if the object and connection was created successfully.
-     */
-    IplImage* getIplImage();
 };
 
 /**
