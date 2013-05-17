@@ -1,5 +1,8 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#ifndef __TRAVIS_LIB__
+#define __TRAVIS_LIB__
+
 /**
  * 
  * @ingroup travis_libraries
@@ -102,4 +105,6 @@ void calcArcLength(float& arc, const vector <Point> biggestCont );
  * This function calculates the circle.
  */
 void calcCircle(float& radius, const vector <Point> biggestCont );
+
+#endif  // __TRAVIS_LIB __
 
