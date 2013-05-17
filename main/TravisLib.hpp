@@ -45,11 +45,32 @@ public:
     Travis() {}
 
     /**
-     * Configure the object and make it connect to a colorXxx module by port name.
+     * Configure the object.
      * @param quiet suppress messages displayed upon success/failure.
      * @return true if the object and connection was created successfully.
      */
-    bool open(const cv::Mat& image, bool quiet=true);
+    bool setCvMat(const cv::Mat& image, bool quiet=true);
+
+    /**
+     * Configure the object.
+     * @param quiet suppress messages displayed upon success/failure.
+     * @return true if the object and connection was created successfully.
+     */
+    bool setIplImage(const IplImage& image, bool quiet=true);
+
+    /**
+     * Get the current state.
+     * @param quiet suppress messages displayed upon success/failure.
+     * @return true if the object and connection was created successfully.
+     */
+    cv::Mat* getCvMat();
+
+    /**
+     * Get the current state.
+     * @param quiet suppress messages displayed upon success/failure.
+     * @return true if the object and connection was created successfully.
+     */
+    IplImage* getIplImage();
 };
 
 /**
