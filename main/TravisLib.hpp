@@ -4,7 +4,7 @@
 
 /**
  * 
- * @ingroup xgnitive_libraries
+ * @ingroup travis_libraries
  * \defgroup SegExLib SegExLib
  *
  * @brief The SegExLib library provides basic 2D image feature extraction auxiliary
