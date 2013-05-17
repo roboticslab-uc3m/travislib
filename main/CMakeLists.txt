@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "example")
+set(KEYWORD "Travis")
 
 # Start a project.
 project(${KEYWORD})
@@ -25,7 +25,7 @@ endforeach(header_file ${folder_header})
 
 # Set up our main executable.
 if (folder_source)
-  add_executable(${KEYWORD} ${folder_source} ${folder_header})
+  add_library(${KEYWORD} ${folder_source} ${folder_header})
 #  target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${YARP_LIBRARIES})
   target_link_libraries(${KEYWORD} ${OpenCV_LIBS})
 else (folder_source)
