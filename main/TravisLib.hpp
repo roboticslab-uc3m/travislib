@@ -10,7 +10,7 @@
  * 
  * <hr>
  *
- * This file can be edited at $XGNITIVE_ROOT/main/src/libraries/TravisLib/SegexLib.hpp
+ * This file can be edited at $TRAVIS_ROOT/main/TravisLib.hpp
  *
  */
 
