@@ -26,6 +26,31 @@ using namespace std;
 using namespace cv;
 
 /**
+ * @ingroup Travis
+ *
+ * The Travis class implements all the algorithms on a single image.
+ * 
+ */
+class Travis {
+protected:
+    bool isQuiet;
+
+public:
+
+    /**
+     * Constructor.
+     */
+    Travis();
+
+    /**
+     * Configure the object and make it connect to a colorXxx module by port name.
+     * @param quiet suppress messages displayed upon success/failure.
+     * @return true if the object and connection was created successfully.
+     */
+    bool open(bool quiet=true);
+};
+
+/**
  * @ingroup TravisLib
  * This function gets the biggest contour.
  */
