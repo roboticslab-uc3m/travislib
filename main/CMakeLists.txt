@@ -34,6 +34,14 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
+set(TRAVIS_INCLUDE_DIRS CACHE INTERNAL "appended header dirs" FORCE)
+set(TRAVIS_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
+set(TRAVIS_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
+
+# Exporting dependencies for TRAVISConfig.cmake quite manually for now... 
+set(TRAVIS_INCLUDE_DIRS ${TRAVIS_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
+set(TRAVIS_LIBRARIES ${TRAVIS_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+
 # export our variables to a TRAVISConfig.cmake creation
 set(TRAVIS_LINK_DIRS ${TRAVIS_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
 configure_file(${CMAKE_SOURCE_DIR}/conf/template/TRAVISConfig.cmake.in
