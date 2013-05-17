@@ -4,7 +4,7 @@
 
 /************************************************************************/
 
-bool Travis::open(bool quiet) {
+bool Travis::open(const cv::Mat& image, bool quiet) {
     if (!isQuiet) printf("[Travis] success: open.\n");
     return true;
 }

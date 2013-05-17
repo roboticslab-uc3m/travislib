@@ -49,7 +49,7 @@ public:
      * @param quiet suppress messages displayed upon success/failure.
      * @return true if the object and connection was created successfully.
      */
-    bool open(bool quiet=true);
+    bool open(const cv::Mat& image, bool quiet=true);
 };
 
 /**
