@@ -4,6 +4,13 @@
 
 /************************************************************************/
 
+bool Travis::open(bool quiet) {
+    if (!isQuiet) printf("[Travis] success: open.\n");
+    return true;
+}
+
+/************************************************************************/
+
 vector <Point> getBiggestContour(const Mat image){
     //variables
     Mat grayImg, cannyImg;
