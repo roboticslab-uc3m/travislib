@@ -17,6 +17,8 @@
  *
  */
 
+#include <stdio.h>  // just printf
+
 //#include "highgui.h" // to show windows
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
