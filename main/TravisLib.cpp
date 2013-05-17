@@ -5,29 +5,16 @@
 /************************************************************************/
 
 bool Travis::setCvMat(const cv::Mat& image, bool quiet) {
-    if (!isQuiet) printf("[Travis] success: open.\n");
+    if (!isQuiet) printf("[Travis] success: setCvMat.\n");
+    _img = image;
     return true;
 }
 
 /************************************************************************/
 
-bool Travis::setIplImage(const IplImage& image, bool quiet) {
-    if (!isQuiet) printf("[Travis] success: open.\n");
-    return true;
-}
-
-/************************************************************************/
-
-cv::Mat* Travis::getCvMat() {
-    if (!isQuiet) printf("[Travis] success: close.\n");
-    return NULL;
-}
-
-/************************************************************************/
-
-IplImage* Travis::getIplImage() {
-    if (!isQuiet) printf("[Travis] success: close.\n");
-    return NULL;
+cv::Mat& Travis::getCvMat() {
+    if (!isQuiet) printf("[Travis] success: getCvMat.\n");
+    return _img;
 }
 
 /************************************************************************/
