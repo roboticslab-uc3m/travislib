@@ -44,6 +44,6 @@ set(TRAVIS_LIBRARIES ${TRAVIS_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended lib
 
 # export our variables to a TRAVISConfig.cmake creation
 set(TRAVIS_LINK_DIRS ${TRAVIS_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/conf/template/TRAVISConfig.cmake.in
+configure_file(${CMAKE_CURRENT_LIST_DIR}/conf/template/TRAVISConfig.cmake.in
                ${CMAKE_BINARY_DIR}/TRAVISConfig.cmake @ONLY)
 
