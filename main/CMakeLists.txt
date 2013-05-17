@@ -1,15 +1,13 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "Travis")
+set(KEYWORD "TravisLib")
 
 # Start a project.
 project(${KEYWORD})
 
 # Find OpenCV.
 find_package(OpenCV REQUIRED)
-# Find YARP.
-#find_package(YARP REQUIRED)
 
 # Search for source code.
 file(GLOB folder_source *.cpp *.cc *.c)
@@ -26,7 +24,6 @@ endforeach(header_file ${folder_header})
 # Set up our main executable.
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
-#  target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${YARP_LIBRARIES})
   target_link_libraries(${KEYWORD} ${OpenCV_LIBS})
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
