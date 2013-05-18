@@ -7,7 +7,10 @@
 #include <highgui.h>
 
 int main(int argc, char *argv[]) {
-   
+    if (argc!=2) {
+        printf( "Usage: travisExample [imageName]\n");
+        return -1;
+    }
     char* imageName = argv[1];
 
     cv::Mat image;
