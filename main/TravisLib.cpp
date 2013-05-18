@@ -4,8 +4,12 @@
 
 /************************************************************************/
 
-bool Travis::setCvMat(const cv::Mat& image, bool quiet) {
-    if (!isQuiet) printf("[Travis] success: setCvMat.\n");
+bool Travis::setCvMat(const cv::Mat& image) {
+    if (!_quiet) printf("[Travis] success: setCvMat.\n");
+    if (!image.data) {
+        if (!_quiet) fprintf(stderr,"[Travis] error: No image data.\n");
+        return false;
+    }
     _img = image;
     return true;
 }
@@ -13,7 +17,7 @@ bool Travis::setCvMat(const cv::Mat& image, bool quiet) {
 /************************************************************************/
 
 cv::Mat& Travis::getCvMat() {
-    if (!isQuiet) printf("[Travis] success: getCvMat.\n");
+    if (!_quiet) printf("[Travis] success: getCvMat.\n");
     return _img;
 }
 
