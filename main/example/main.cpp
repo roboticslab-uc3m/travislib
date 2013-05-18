@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
     Travis travis;
     travis.setCvMat(image);
 
+    cv::Mat outImage = travis.getCvMat();
 
     cv::Mat gray_image;
     cvtColor( image, gray_image, CV_BGR2GRAY );
