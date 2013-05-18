@@ -59,6 +59,7 @@ public:
      */
     cv::Mat& getCvMat();
 
+    void binarize(const char* algorithm, const double threshold);
 };
 
 /**
