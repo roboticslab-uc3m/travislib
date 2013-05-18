@@ -7,7 +7,7 @@
 bool Travis::setCvMat(const cv::Mat& image) {
     if (!_quiet) printf("[Travis] in: setCvMat(...)\n");
     if (!image.data) {
-        if (!_quiet) fprintf(stderr,"[Travis] error: No image data.\n");
+        fprintf(stderr,"[Travis] error: No image data.\n");
         return false;
     }
     _img = image;
@@ -24,11 +24,14 @@ cv::Mat& Travis::getCvMat() {
 /************************************************************************/
 
 void Travis::binarize(const char* algorithm, const double threshold) {
-    if (!_quiet) printf("[Travis] in: binarize(%s,%f)\n",algorithm,threshold);
-    if (algorithm=="redMinusGreen") {
+    if (!_quiet) printf("[Travis] in: binarize(...)\n",algorithm,threshold);
+    if (strcmp(algorithm,"redMinusGreen")==0) {
         if (!_quiet) printf("[Travis] in: binarize: redMinusGreen.\n");
-        
-    }
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
+        //cv::subtract(
+        _img = bgrChannels[0];
+    } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
     return;
 }
 
