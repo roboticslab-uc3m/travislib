@@ -28,7 +28,7 @@ link_directories(${TRAVIS_LINK_DIRS})
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${TRAVIS_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${TRAVIS_LIBRARIES} opencv_imgproc) # opencv_imgproc if no cvtcolor..
   install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
