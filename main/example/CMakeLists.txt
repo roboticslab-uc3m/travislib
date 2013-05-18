@@ -23,11 +23,12 @@ endforeach(header_file ${folder_header})
 
 # Inclue any directories needed
 include_directories(${TRAVIS_INCLUDE_DIRS})
+link_directories(${TRAVIS_LINK_DIRS})
 
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${OpenCV_LIBS})
+  target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${TRAVIS_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
