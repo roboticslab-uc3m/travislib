@@ -29,10 +29,11 @@ void Travis::binarize(const char* algorithm, const double threshold) {
         if (!_quiet) printf("[Travis] in: binarize: redMinusGreen.\n");
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
-        bgrChannels[1] = bgrChannels[0];
-        bgrChannels[2] = bgrChannels[0];
-        //cv::subtract(
-        cv::merge(bgrChannels, 3, _img);
+        cv::Mat outChannels[3];
+        cv::subtract(bgrChannels[2], bgrChannels[0], outChannels[0]);  // BGR
+        outChannels[1] = outChannels[0];
+        outChannels[2] = outChannels[0];
+        cv::merge(outChannels, 3, _img);
     } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
     return;
 }
