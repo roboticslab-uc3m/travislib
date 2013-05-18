@@ -35,7 +35,7 @@ using namespace cv;
  */
 class Travis {
 protected:
-    bool isQuiet;
+    bool isQuiet, _imgSet;
     cv::Mat _img;
 
 public:
@@ -43,7 +43,7 @@ public:
     /**
      * Constructor.
      */
-    Travis() {}
+    Travis() : _imgSet(false) {}
 
     /**
      * Configure the object.
