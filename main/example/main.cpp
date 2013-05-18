@@ -5,6 +5,7 @@
 #include <cv.h>
 #include <cvaux.h>
 #include <highgui.h>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <TravisLib.hpp>
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
 
     cv::Mat outImage = travis.getCvMat();
 
-    cvtColor( outImage, outImage, CV_BGR2GRAY );
+    //cvtColor( outImage, outImage, CV_BGR2GRAY );
 
     cv::namedWindow( imageName, CV_WINDOW_AUTOSIZE );
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
