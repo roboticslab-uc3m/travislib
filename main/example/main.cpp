@@ -6,6 +6,8 @@
 #include <cvaux.h>
 #include <highgui.h>
 
+#include <TravisLib.hpp>
+
 int main(int argc, char *argv[]) {
     if (argc!=2) {
         printf( "Usage: travisExample [imageName]\n");
@@ -18,6 +20,9 @@ int main(int argc, char *argv[]) {
         printf( "[error] No image data.\n " );
         return -1;
     }
+    Travis travis;
+    travis.setCvMat(image);
+
 
     cv::Mat gray_image;
     cvtColor( image, gray_image, CV_BGR2GRAY );
