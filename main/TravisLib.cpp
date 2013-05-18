@@ -5,7 +5,7 @@
 /************************************************************************/
 
 bool Travis::setCvMat(const cv::Mat& image) {
-    if (!_quiet) printf("[Travis] in: setCvMat.\n");
+    if (!_quiet) printf("[Travis] in: setCvMat(...)\n");
     if (!image.data) {
         if (!_quiet) fprintf(stderr,"[Travis] error: No image data.\n");
         return false;
@@ -17,14 +17,18 @@ bool Travis::setCvMat(const cv::Mat& image) {
 /************************************************************************/
 
 cv::Mat& Travis::getCvMat() {
-    if (!_quiet) printf("[Travis] in: getCvMat.\n");
+    if (!_quiet) printf("[Travis] in: getCvMat()\n");
     return _img;
 }
 
 /************************************************************************/
 
 void Travis::binarize(const char* algorithm, const double threshold) {
-    if (!_quiet) printf("[Travis] in: binarize.\n");
+    if (!_quiet) printf("[Travis] in: binarize(%s,%f)\n",algorithm,threshold);
+    if (algorithm=="redMinusGreen") {
+        if (!_quiet) printf("[Travis] in: binarize: redMinusGreen.\n");
+        
+    }
     return;
 }
 
