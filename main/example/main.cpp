@@ -12,12 +12,10 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     char* imageName = argv[1];
+    cv::Mat image = cv::imread(imageName, 1);
 
-    cv::Mat image;
-    image = cv::imread( imageName, 1 );
-
-    if( argc != 2 || !image.data ) {
-        printf( " No image data \n " );
+    if (!image.data) {
+        printf( "[error] No image data.\n " );
         return -1;
     }
 
@@ -33,5 +31,6 @@ int main(int argc, char *argv[]) {
     imshow( "Gray image", gray_image );
 
     cv::waitKey(0);
+    printf( "Done. Bye!\n");
     return 0;
 }
