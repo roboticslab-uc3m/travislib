@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     char* imageName = argv[1];
     cv::Mat image = cv::imread(imageName, 1);
 
-    Travis travis();  // travis(bool quiet=true); set false for verbosity
+    Travis travis;  // travis(bool quiet=true); set false for verbosity
     if( !travis.setCvMat(image) ) return -1;
 
     cv::Mat outImage = travis.getCvMat();
