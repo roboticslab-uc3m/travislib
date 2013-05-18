@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
     char* imageName = argv[1];
     cv::Mat image = cv::imread(imageName, 1);
 
-    Travis travis;  // travis(bool quiet=true); set false for verbosity
+    Travis travis(false);  // travis(bool quiet=true); set false for verbosity
     if( !travis.setCvMat(image) ) return -1;
-
+    travis.binarize("redMinusGreen",50);
     cv::Mat outImage = travis.getCvMat();
 
     //cvtColor( outImage, outImage, CV_BGR2GRAY );
