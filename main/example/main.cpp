@@ -16,25 +16,18 @@ int main(int argc, char *argv[]) {
     char* imageName = argv[1];
     cv::Mat image = cv::imread(imageName, 1);
 
-    if (!image.data) {
-        printf( "[error] No image data.\n " );
-        return -1;
-    }
-    Travis travis;
-    travis.setCvMat(image);
+    Travis travis();  // travis(bool quiet=true); set false for verbosity
+    if( !travis.setCvMat(image) ) return -1;
 
     cv::Mat outImage = travis.getCvMat();
 
-    cv::Mat gray_image;
-    cvtColor( image, gray_image, CV_BGR2GRAY );
-
-    //imwrite( "../../images/Gray_Image.jpg", gray_image );
+    cvtColor( outImage, outImage, CV_BGR2GRAY );
 
     cv::namedWindow( imageName, CV_WINDOW_AUTOSIZE );
-    cv::namedWindow( "Gray image", CV_WINDOW_AUTOSIZE );
+    cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
 
     imshow( imageName, image );
-    imshow( "Gray image", gray_image );
+    imshow( "Output image", outImage );
 
     cv::waitKey(0);
     printf( "Done. Bye!\n");
