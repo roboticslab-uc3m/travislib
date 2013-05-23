@@ -9,11 +9,11 @@
  * \defgroup TravisLib TravisLib
  *
  * @brief The TravisLib library provides basic 2D image feature extraction auxiliary
- * functions for the \ref segEx module and others.
+ * functions for different modules.
  * 
  * <hr>
  *
- * This file can be edited at $TRAVIS_ROOT/main/TravisLib.hpp
+ * This file can be edited at $TRAVIS_ROOT/TravisLib.hpp
  *
  */
 
@@ -28,37 +28,45 @@ using namespace std;
 using namespace cv;
 
 /**
- * @ingroup Travis
+ * @ingroup travis_libraries
+ *
+ * \defgroup Travis
  *
  * The Travis class implements all the algorithms on a single image.
  * 
  */
 class Travis {
 protected:
-    bool _quiet, _imgSet;
+    bool _quiet;
     cv::Mat _img;
 
 public:
 
     /**
-     * Constructor.
+     * Travis class constructor.
+     * @param quiet suppress messages displayed upon success/failure.
      */
     Travis(bool quiet=true) : _quiet(quiet), _imgSet(false) {}
 
     /**
-     * Configure the object.
-     * @param quiet suppress messages displayed upon success/failure.
-     * @return true if the object and connection was created successfully.
+     * Set the image in cv::Mat format.
+     * @param image the image to set, in cv::Mat format.
+     * @return true if the object was set successfully.
      */
     bool setCvMat(const cv::Mat& image);
 
     /**
-     * Get the current state.
+     * Get the image in cv::Mat format.
      * @param quiet suppress messages displayed upon success/failure.
-     * @return true if the object and connection was created successfully.
+     * @return the image, in cv::Mat format.
      */
     cv::Mat& getCvMat();
 
+    /**
+     * Binarize the image.
+     * @algorithm i.e. "redMinusGreen".
+     * @threshold i.e. 50.
+     */
     void binarize(const char* algorithm, const double threshold);
 };
 
