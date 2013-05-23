@@ -5,12 +5,16 @@
 
 /**
  * 
- * @ingroup travis_libraries
- * \defgroup TravisLib TravisLib
+ * \defgroup travis_libraries TravisLib
  *
  * @brief The TravisLib library provides basic 2D image feature extraction auxiliary
  * functions for different modules.
- * 
+ *
+ * \defgroup travis_functions TravisFuncs
+ *
+ * @brief The TravisFuncs library provides basic 2D image feature extraction auxiliary
+ * functions.
+ *
  * <hr>
  *
  * This file can be edited at $TRAVIS_ROOT/TravisLib.hpp
