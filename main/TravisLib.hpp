@@ -55,7 +55,7 @@ public:
      * Travis class constructor.
      * @param quiet suppress messages displayed upon success/failure.
      */
-    Travis(bool quiet=true) : _quiet(quiet), _imgSet(false) {}
+    Travis(bool quiet=true) : _quiet(quiet) {}
 
     /**
      * Set the image in cv::Mat format.

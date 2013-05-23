@@ -10,27 +10,27 @@
 #include <TravisLib.hpp>
 
 int main(int argc, char *argv[]) {
+
     if (argc!=2) {
         printf( "Usage: travisExample [imageName]\n");
         return -1;
     }
-    char* imageName = argv[1];
-    cv::Mat image = cv::imread(imageName, 1);
+    char* inImageName = argv[1];
+    cv::Mat inImage = cv::imread(inImageName, 1);
 
-    Travis travis(false);  // travis(bool quiet=true); set false for verbosity
-    if( !travis.setCvMat(image) ) return -1;
+    // \begin{Use of Travis}
+    Travis travis;  // for verbosity use: Travis travis(false);
+    if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
     cv::Mat outImage = travis.getCvMat();
+    // \end{Use of Travis}
 
-    //cvtColor( outImage, outImage, CV_BGR2GRAY );
-
-    cv::namedWindow( imageName, CV_WINDOW_AUTOSIZE );
+    cv::namedWindow( "Input image", CV_WINDOW_AUTOSIZE );
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
-
-    imshow( imageName, image );
+    imshow( "Input image", inImage );
     imshow( "Output image", outImage );
-
     cv::waitKey(0);
     printf( "Done. Bye!\n");
+
     return 0;
 }
