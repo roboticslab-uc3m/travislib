@@ -32,6 +32,8 @@ using namespace cv;
  *
  * \defgroup Travis
  *
+ * @brief The Travis class implements all the algorithms on a single image.
+ *
  * The Travis class implements all the algorithms on a single image.
  * 
  */
