@@ -23,6 +23,13 @@ cv::Mat& Travis::getCvMat() {
 
 /************************************************************************/
 
+void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
+    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(...), set to %d.\n", maxNumBlobs);
+    _maxNumBlobs = maxNumBlobs;
+}
+
+/************************************************************************/
+
 void Travis::binarize(const char* algorithm, const double threshold) {
     if (!_quiet) printf("[Travis] in: binarize(...)\n");
     if (strcmp(algorithm,"redMinusGreen")==0) {
