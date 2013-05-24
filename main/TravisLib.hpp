@@ -58,7 +58,7 @@ public:
 
     /**
      * Binarize the image.
-     * @param algorithm i.e. "redMinusGreen".
+     * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
      * @param threshold i.e. 50.
      */
     void binarize(const char* algorithm, const double threshold);
