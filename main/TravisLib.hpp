@@ -34,8 +34,9 @@ public:
     /**
      * Travis class constructor.
      * @param quiet suppress messages displayed upon success/failure.
+     * @param overwrite will not make a copy (faster, less memory), but will overwrite the image you pass.
      */
-    Travis(bool quiet=true) : _quiet(quiet), _maxNumBlobs(1) {}
+    Travis(bool quiet=true, bool overwrite=true) : _quiet(quiet), _overwrite(overwrite), _maxNumBlobs(1) {}
 
     /**
      * Set the image in cv::Mat format.
@@ -71,6 +72,9 @@ public:
 protected:
     /** Store the verbosity level. */
     bool _quiet;
+
+    /** Store the overwrite parameter. */
+    bool _overwrite;
 
     /** Store the image in cv::Mat format. */
     cv::Mat _img;
