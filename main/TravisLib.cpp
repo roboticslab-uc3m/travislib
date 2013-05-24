@@ -24,14 +24,13 @@ cv::Mat& Travis::getCvMat() {
 /************************************************************************/
 
 void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
-    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(...), set to %d.\n", maxNumBlobs);
+    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(%d)\n", maxNumBlobs);
     _maxNumBlobs = maxNumBlobs;
 }
 
 /************************************************************************/
 
 void Travis::binarize(const char* algorithm, const double threshold) {
-    if (!_quiet) printf("[Travis] in: binarize(...)\n");
     if (strcmp(algorithm,"redMinusGreen")==0) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
@@ -42,7 +41,7 @@ void Travis::binarize(const char* algorithm, const double threshold) {
         outChannels[1] = outChannels[0];
         outChannels[2] = outChannels[0];
         cv::merge(outChannels, 3, _img);
-    } else fprintf(stderr,"[warning] Unrecognized algorithm: %s.\n",algorithm);
+    } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
     return;
 }
 
