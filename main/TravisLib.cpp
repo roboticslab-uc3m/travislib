@@ -41,10 +41,22 @@ void Travis::binarize(const char* algorithm, const double threshold) {
         outChannels[1] = outChannels[0];
         outChannels[2] = outChannels[0];
         cv::merge(outChannels, 3, _img);
+    } else if (strcmp(algorithm,"greenMinusRed")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(greenMinusRed, %f)\n",threshold);
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
+        cv::Mat outChannels[3];
+        cv::subtract(bgrChannels[0], bgrChannels[2], outChannels[0]);  // BGR
+        cv::threshold(outChannels[0],outChannels[0],threshold,255,3);
+        outChannels[1] = outChannels[0];
+        outChannels[2] = outChannels[0];
+        cv::merge(outChannels, 3, _img);
     } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
     return;
 }
 
+/************************************************************************/
+/************************************************************************/
 /************************************************************************/
 
 vector <Point> getBiggestContour(const Mat image){
