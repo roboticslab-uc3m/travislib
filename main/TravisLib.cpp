@@ -63,6 +63,12 @@ void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
     // sort contours
     std::sort(_contours.begin(), _contours.end(),compareContourAreas);
 
+    RNG rng(12345);
+    for( int i = 0; i < _contours.size(); i++ ) {
+        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+        drawContours( _img, _contours, i, color, 2, 8, CV_RETR_LIST, 0, Point() );
+    }
+
     if (!_quiet) printf("[Travis] found contours: %d\n", _contours.size());
 
 }
