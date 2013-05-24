@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     cv::Mat inImage = cv::imread(inImageName, 1);
 
     // \begin{Use of Travis}
-    Travis travis(false);  // for quiet just use: Travis travis;
+    Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
     if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
     travis.setMaxNumBlobs(3);
