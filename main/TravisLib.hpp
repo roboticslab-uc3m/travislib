@@ -61,7 +61,7 @@ public:
      * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
      * @param threshold i.e. 50.
      */
-    void binarize(const char* algorithm, const double threshold);
+    void binarize(const char* algorithm, const double& threshold);
 
     /**
      * This function calculates X and Y.

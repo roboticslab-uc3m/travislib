@@ -23,14 +23,7 @@ cv::Mat& Travis::getCvMat() {
 
 /************************************************************************/
 
-void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
-    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(%d)\n", maxNumBlobs);
-    _maxNumBlobs = maxNumBlobs;
-}
-
-/************************************************************************/
-
-void Travis::binarize(const char* algorithm, const double threshold) {
+void Travis::binarize(const char* algorithm, const double& threshold) {
     if (strcmp(algorithm,"redMinusGreen")==0) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
@@ -56,8 +49,30 @@ void Travis::binarize(const char* algorithm, const double threshold) {
 }
 
 /************************************************************************/
+
+void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
+    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(%d)\n", maxNumBlobs);
+    _maxNumBlobs = maxNumBlobs;
+
+    //inspired on: getBiggestContour
+    Mat cannyImg;
+    Canny( _img, cannyImg, 30,100);
+    vector < vector <Point> > contours;
+    findContours( cannyImg, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+
+    if (!_quiet) printf("[Travis] found contours: %d\n", contours.size());
+
+}
+
+/************************************************************************/
 void Travis::getBlobsXY(const vector <Point>& locations) {
     if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
+
+    vector < vector <Point> > biggest;
+
+    //RotatedRect minEllipse = fitEllipse( Mat(biggestCont) );
+    //locations.push_back( minEllipse.center );
+
     return;
 }
 
