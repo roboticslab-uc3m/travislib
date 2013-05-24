@@ -1,0 +1,27 @@
+/**
+ * 
+ * \defgroup travis_libraries Travis Libraries
+ *
+ * @brief For now there is only one library, namely \ref travis_library.
+ *
+ * For now there is only one library, namely \ref travis_library.
+ *
+ */
+
+/**
+ * \defgroup travis_functions Travis Functions
+ *
+ * @brief A collection of functions that provide basic 2D image feature extraction.
+ *
+ * A collection of functions that provide basic 2D image feature extraction.
+ */
+
+/**
+ * \defgroup travis_examples Travis Examples
+ *
+ * @brief A collection of examples that show how to use Travis.
+ *
+ * A collection of examples that show how to use Travis.
+ *
+ */
+

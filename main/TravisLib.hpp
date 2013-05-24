@@ -3,24 +3,6 @@
 #ifndef __TRAVIS_LIB_HPP__
 #define __TRAVIS_LIB_HPP__
 
-/**
- * 
- * \defgroup travis_libraries TravisLib
- *
- * @brief The TravisLib library provides basic 2D image feature extraction auxiliary
- * functions for different modules.
- *
- * \defgroup travis_functions TravisFuncs
- *
- * @brief The TravisFuncs library provides basic 2D image feature extraction auxiliary
- * functions.
- *
- * <hr>
- *
- * This file can be edited at $TRAVIS_ROOT/TravisLib.hpp
- *
- */
-
 #include <stdio.h>  // just printf
 
 //#include "highgui.h" // to show windows
@@ -34,12 +16,17 @@ using namespace cv;
 /**
  * @ingroup travis_libraries
  *
- * \defgroup Travis
+ * \defgroup travis_library TravisLib
+ *
+ * @brief Contains a single class, called Travis.
+ *
+ * Contains a single class, called Travis.
+ */
+
+/*
+ * @ingroup travis_library
  *
  * @brief The Travis class implements all the algorithms on a single image.
- *
- * The Travis class implements all the algorithms on a single image.
- * 
  */
 class Travis {
 protected:
