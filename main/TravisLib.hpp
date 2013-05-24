@@ -29,13 +29,6 @@ using namespace cv;
  * @brief The Travis class implements all the algorithms on a single image.
  */
 class Travis {
-protected:
-    /** Store the verbosity level. */
-    bool _quiet;
-
-    /** Store the image in cv::Mat format. */
-    cv::Mat _img;
-
 public:
 
     /**
@@ -52,6 +45,12 @@ public:
     bool setCvMat(const cv::Mat& image);
 
     /**
+     * Set the number of max blobs to keep.
+     * @param image the image to set, in cv::Mat format.
+     */
+    void setMaxNumBlobs(const int& maxNumBlobs);
+
+    /**
      * Get the image in cv::Mat format.
      * @return the image, in cv::Mat format.
      */
@@ -63,6 +62,16 @@ public:
      * @param threshold i.e. 50.
      */
     void binarize(const char* algorithm, const double threshold);
+
+protected:
+    /** Store the verbosity level. */
+    bool _quiet;
+
+    /** Store the image in cv::Mat format. */
+    cv::Mat _img;
+
+    /** Store the number of max blobs to keep. */
+    int _maxNumBlobs;
 };
 
 /**
