@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
     if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
     travis.setMaxNumBlobs(3);
+    vector<cv::Point> blobCentroids;
+    travis.getBlobsXY(blobCentroids);
     cv::Mat outImage = travis.getCvMat();
     // \end{Use of Travis}
 

@@ -63,6 +63,11 @@ public:
      */
     void binarize(const char* algorithm, const double threshold);
 
+    /**
+     * This function calculates X and Y.
+     */
+    void getBlobsXY(const vector <Point>& locations);
+
 protected:
     /** Store the verbosity level. */
     bool _quiet;
