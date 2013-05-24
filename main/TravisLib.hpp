@@ -35,7 +35,7 @@ public:
      * Travis class constructor.
      * @param quiet suppress messages displayed upon success/failure.
      */
-    Travis(bool quiet=true) : _quiet(quiet) {}
+    Travis(bool quiet=true) : _quiet(quiet), _maxNumBlobs(1) {}
 
     /**
      * Set the image in cv::Mat format.
@@ -46,7 +46,7 @@ public:
 
     /**
      * Set the number of max blobs to keep.
-     * @param image the image to set, in cv::Mat format.
+     * @param maxNumBlobs the number to set, in integer format.
      */
     void setMaxNumBlobs(const int& maxNumBlobs);
 
