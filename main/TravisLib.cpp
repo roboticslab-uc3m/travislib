@@ -55,12 +55,15 @@ void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
     _maxNumBlobs = maxNumBlobs;
 
     //inspired on: getBiggestContour
+    //and http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea
     Mat cannyImg;
     Canny( _img, cannyImg, 30,100);
-    vector < vector <Point> > contours;
-    findContours( cannyImg, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    findContours( cannyImg, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    
+    // sort contours
+    std::sort(_contours.begin(), _contours.end(),compareContourAreas);
 
-    if (!_quiet) printf("[Travis] found contours: %d\n", contours.size());
+    if (!_quiet) printf("[Travis] found contours: %d\n", _contours.size());
 
 }
 
@@ -78,6 +81,15 @@ void Travis::getBlobsXY(const vector <Point>& locations) {
 
 /************************************************************************/
 /************************************************************************/
+/************************************************************************/
+
+// comparison function object
+bool compareContourAreas ( std::vector<cv::Point> contour1, std::vector<cv::Point> contour2 ) {
+    double i = fabs( contourArea(cv::Mat(contour1)) );
+    double j = fabs( contourArea(cv::Mat(contour2)) );
+    return ( i < j );
+}
+
 /************************************************************************/
 
 vector <Point> getBiggestContour(const Mat image){

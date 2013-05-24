@@ -77,7 +77,16 @@ protected:
 
     /** Store the number of max blobs to keep. */
     int _maxNumBlobs;
+
+    /** Store the contours (blob contours). */
+    vector < vector <Point> > _contours;
 };
+
+/**
+ * @ingroup travis_functions
+ * Can be used as a comparison function object for sorting.
+ */
+bool compareContourAreas ( std::vector<cv::Point> contour1, std::vector<cv::Point> contour2 );
 
 /**
  * @ingroup travis_functions
