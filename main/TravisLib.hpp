@@ -36,7 +36,7 @@ public:
      * @param quiet suppress messages displayed upon success/failure.
      * @param overwrite will not make a copy (faster, less memory), but will overwrite the image you pass.
      */
-    Travis(bool quiet=true, bool overwrite=true) : _quiet(quiet), _overwrite(overwrite), _maxNumBlobs(1) {}
+    Travis(bool quiet=true, bool overwrite=true) : _quiet(quiet), _overwrite(overwrite) {}
 
     /**
      * Set the image in cv::Mat format.
@@ -46,18 +46,6 @@ public:
     bool setCvMat(const cv::Mat& image);
 
     /**
-     * Set the number of max blobs to keep.
-     * @param maxNumBlobs the number to set, in integer format.
-     */
-    void setMaxNumBlobs(const int& maxNumBlobs);
-
-    /**
-     * Get the image in cv::Mat format.
-     * @return the image, in cv::Mat format.
-     */
-    cv::Mat& getCvMat();
-
-    /**
      * Binarize the image.
      * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
      * @param threshold i.e. 50.
@@ -65,9 +53,21 @@ public:
     void binarize(const char* algorithm, const double& threshold);
 
     /**
+     * Use findContours to get what we use as blobs.
+     * @param maxNumBlobs the number of max blobs to keep, the rest get truncated.
+     */
+    void blobize(const int& maxNumBlobs, const int& vizualization);
+
+    /**
      * This function calculates X and Y.
      */
     void getBlobsXY(const vector <Point>& locations);
+
+    /**
+     * Get the image in cv::Mat format.
+     * @return the image, in cv::Mat format.
+     */
+    cv::Mat& getCvMat();
 
 protected:
     /** Store the verbosity level. */
@@ -81,9 +81,6 @@ protected:
 
     /** Store the binary image in cv::Mat format. */
     cv::Mat _imgBin;
-
-    /** Store the number of max blobs to keep. */
-    int _maxNumBlobs;
 
     /** Store the contours (blob contours). */
     vector < vector <Point> > _contours;

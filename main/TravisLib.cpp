@@ -36,24 +36,29 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 
 /************************************************************************/
 
-void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
-    if (!_quiet) printf("[Travis] in: setMaxNumBlobs(%d)\n", maxNumBlobs);
-
-    _maxNumBlobs = maxNumBlobs;
+void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
+    if (!_quiet) printf("[Travis] in: segmentBlobs(%d,%d)\n",maxNumBlobs,vizualization);
 
     // [thanks getBiggestContour from smorante]
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
-    
-    // [thanks http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea]
-    std::sort(_contours.begin(), _contours.end(),compareContourAreas);
-
-    RNG rng(12345);
-    for( int i = 0; ( i < _contours.size() ) && ( i < _maxNumBlobs ) ; i++ ) {
-        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-        drawContours( _img, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
-    }
 
     if (!_quiet) printf("[Travis] found contours: %d\n", _contours.size());
+    
+    // [thanks http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea]
+    // default to sort by size (to keep the biggest, xD)
+    std::sort( _contours.begin(), _contours.end(), compareContourAreas);
+
+    // Now truncate
+    if (_contours.size() > maxNumBlobs)
+        _contours.erase( _contours.begin()+maxNumBlobs, _contours.end() );
+
+    if( vizualization == 1) {
+        RNG rng(12345);
+        for( int i = 0; i < _contours.size(); i++ ) {
+            Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+            drawContours( _img, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
+        }
+    }
 
 }
 
@@ -61,7 +66,7 @@ void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
 void Travis::getBlobsXY(const vector <Point>& locations) {
     if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
 
-    vector < vector <Point> > biggest;
+    // we have the number of actual blobs in _contours.size()
 
     //RotatedRect minEllipse = fitEllipse( Mat(biggestCont) );
     //locations.push_back( minEllipse.center );
