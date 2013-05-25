@@ -65,6 +65,11 @@ public:
     bool getBlobsXY(vector <Point>& locations);
 
     /**
+     * This function calculates ALPHA.
+     */
+    bool getBlobsAngle(vector <double>& angles);
+
+    /**
      * Get the image in cv::Mat format.
      * @return the image, in cv::Mat format.
      */

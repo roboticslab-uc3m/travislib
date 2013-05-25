@@ -89,6 +89,15 @@ bool Travis::getBlobsXY(vector <Point>& locations) {
 }
 
 /************************************************************************/
+bool Travis::getBlobsAngle(vector <double>& angles) {
+    for( int i = 0; i < _contours.size(); i++ ) {
+        Rect sqCont = boundingRect( Mat(_contours[i]) );
+    }
+    return true;
+}
+
+
+/************************************************************************/
 
 cv::Mat& Travis::getCvMat() {
     if (!_quiet) printf("[Travis] in: getCvMat()\n");
