@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
     if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
-    travis.setMaxNumBlobs(3);
+    travis.blobize(3, 1);  // max 3 blobs, vizualize: 0=None, 1=Contour, 2=?
     vector<cv::Point> blobCentroids;
     travis.getBlobsXY(blobCentroids);
     cv::Mat outImage = travis.getCvMat();
