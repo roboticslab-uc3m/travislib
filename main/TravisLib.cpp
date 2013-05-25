@@ -90,6 +90,7 @@ bool Travis::getBlobsXY(vector <Point>& locations) {
 
 /************************************************************************/
 bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization) {
+    if (!_quiet) printf("[Travis] in: getBlobsBoxAngle(...,%d)\n",vizualization);
 
     for( int i = 0; i < _contours.size(); i++ ) {
         //Rect sqCont = boundingRect( Mat(_contours[i]) );
@@ -98,8 +99,9 @@ bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization)
         
         // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
         RotatedRect minRotatedRect = minAreaRect( Mat(_contours[i]) );
-        //?//if (angle < -45.) angle += 90.;
-        angles.push_back( minRotatedRect.angle );
+        double angle = minRotatedRect.angle;
+        if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
+        angles.push_back( angle );
 
         if( vizualization==2 ){
             cv::Point2f vertices[4];
@@ -114,6 +116,7 @@ bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization)
 
 /************************************************************************/
 bool Travis::getBlobsEllipseAngle(vector <double>& angles, const int& vizualization) {
+    if (!_quiet) printf("[Travis] in: getBlobsEllipseAngle(...,%d)\n",vizualization);
 
     for( int i = 0; i < _contours.size(); i++ ) {
         //Rect sqCont = boundingRect( Mat(_contours[i]) );
