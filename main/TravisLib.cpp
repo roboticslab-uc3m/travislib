@@ -99,9 +99,10 @@ bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization)
         
         // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
         RotatedRect minRotatedRect = minAreaRect( Mat(_contours[i]) );
-        double angle = minRotatedRect.angle;
+        /*double angle = minRotatedRect.angle;
         if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
-        angles.push_back( angle );
+        angles.push_back( angle );*/
+        angles.push_back( minRotatedRect.angle+90.0 );
 
         if( vizualization==2 ){
             cv::Point2f vertices[4];
