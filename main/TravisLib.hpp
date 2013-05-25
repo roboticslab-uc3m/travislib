@@ -61,7 +61,7 @@ public:
     /**
      * This function calculates X and Y.
      */
-    void getBlobsXY(vector <Point>& locations);
+    bool getBlobsXY(vector <Point>& locations);
 
     /**
      * Get the image in cv::Mat format.

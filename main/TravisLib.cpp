@@ -39,7 +39,7 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
     if (!_quiet) printf("[Travis] in: blobize(%d,%d)\n",maxNumBlobs,vizualization);
 
-    // [thanks getBiggestContour from smorante]
+    // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
 
     if (!_quiet) printf("[Travis] # of found contours: %d.\n", _contours.size());
@@ -63,16 +63,29 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
 }
 
 /************************************************************************/
-void Travis::getBlobsXY(vector <Point>& locations) {
+bool Travis::getBlobsXY(vector <Point>& locations) {
     if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
 
     // we have the number of actual blobs in _contours.size()
-    for ( int i = 0; i < _contours.size(); i++ ) {
+
+    // This method seems less accurate and less efficient, breaks if < 5 (px?)
+    /*for ( int i = 0; i < _contours.size(); i++ ) {
         RotatedRect minEllipse = fitEllipse( Mat(_contours[i]) );
         locations.push_back( minEllipse.center );
+    }*/
+
+    // [thanks http://areshopencv.blogspot.com.es/2011/09/finding-center-of-gravity-in-opencv.html]
+    vector<Moments> mu( _contours.size() );
+    for( int i = 0; i < _contours.size(); i++ ) {
+        mu[i] = moments( Mat(_contours[i]), false );
+    }
+    vector<Point2f> mc( _contours.size() );
+    for( int i = 0; i < _contours.size(); i++ ) {
+        mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+        locations.push_back( mc[i] );
     }
 
-    return;
+    return true;
 }
 
 /************************************************************************/
