@@ -42,7 +42,7 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
     // [thanks getBiggestContour from smorante]
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
 
-    if (!_quiet) printf("[Travis] found contours: %d\n", _contours.size());
+    if (!_quiet) printf("[Travis] # of found contours: %d.\n", _contours.size());
     
     // [thanks http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea]
     // default to sort by size (to keep the biggest, xD)
@@ -63,13 +63,14 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
 }
 
 /************************************************************************/
-void Travis::getBlobsXY(const vector <Point>& locations) {
-    if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
+void Travis::getBlobsXY(vector <Point>& locations) {
+    if (!_quiet) printf("[Travis] in: getBlobsXY()\n");
 
     // we have the number of actual blobs in _contours.size()
-
-    //RotatedRect minEllipse = fitEllipse( Mat(biggestCont) );
-    //locations.push_back( minEllipse.center );
+    for ( int i = 0; i < _contours.size(); i++ ) {
+        RotatedRect minEllipse = fitEllipse( Mat(_contours[i]) );
+        locations.push_back( minEllipse.center );
+    }
 
     return;
 }
