@@ -37,7 +37,7 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 /************************************************************************/
 
 void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
-    if (!_quiet) printf("[Travis] in: segmentBlobs(%d,%d)\n",maxNumBlobs,vizualization);
+    if (!_quiet) printf("[Travis] in: blobize(%d,%d)\n",maxNumBlobs,vizualization);
 
     // [thanks getBiggestContour from smorante]
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
@@ -64,7 +64,7 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
 
 /************************************************************************/
 void Travis::getBlobsXY(vector <Point>& locations) {
-    if (!_quiet) printf("[Travis] in: getBlobsXY()\n");
+    if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
 
     // we have the number of actual blobs in _contours.size()
     for ( int i = 0; i < _contours.size(); i++ ) {
