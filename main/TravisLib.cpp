@@ -47,7 +47,7 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
 
-    if (!_quiet) printf("[Travis] # of found contours: %d.\n", _contours.size());
+    if (!_quiet) printf("[Travis] # of found contours: %zd.\n", _contours.size());
     
     // [thanks http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea]
     // default to sort by size (to keep the biggest, xD)
