@@ -61,13 +61,23 @@ public:
 
     /**
      * This function calculates X and Y.
+     * @param locations returned.
      */
     bool getBlobsXY(vector <Point>& locations);
 
     /**
      * This function calculates ALPHA.
+     * @param angles returned.
+     * @param vizualization param, 0=None, 2=minRotatedRect.
      */
-    bool getBlobsAngle(vector <double>& angles);
+    bool getBlobsBoxAngle(vector <double>& angles, const int& vizualization);
+
+    /**
+     * This function calculates ALPHA.
+     * @param angles returned.
+     * @param vizualization param, 0=None, 2=minRotatedRect.
+     */
+    bool getBlobsEllipseAngle(vector <double>& angles, const int& vizualization);
 
     /**
      * Get the image in cv::Mat format.
