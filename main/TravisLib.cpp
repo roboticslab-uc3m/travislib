@@ -120,6 +120,12 @@ bool Travis::getBlobsEllipseAngle(vector <double>& angles, const int& vizualizat
         //RotatedRect sqCont = boundingRect( Mat(_contours[i]) );
         //RotatedRect minEllipse = fitEllipse(Mat(_contours[i]));
         
+        // hopefully people will see this return false as a warning and treat before error.
+        if (_contours[i].size() < 5) {
+            fprintf(stderr,"[Travis] warning: returning false as ellipse would break with < 5 points.\n");
+            return false;  // else fitEllipse would cause break exit.
+        }
+
         // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
         RotatedRect minRotatedRect = fitEllipse( Mat(_contours[i]) );
         //?//if (angle < -45.) angle += 90.;
