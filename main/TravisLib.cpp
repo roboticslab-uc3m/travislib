@@ -10,16 +10,9 @@ bool Travis::setCvMat(const cv::Mat& image) {
         fprintf(stderr,"[Travis] error: No image data.\n");
         return false;
     }
-    if (!_overwrite) _img = image.clone();
-    else _img = image;
+    if (!_overwrite) _img = image.clone();  // safer
+    else _img = image;  // faster and less memory
     return true;
-}
-
-/************************************************************************/
-
-cv::Mat& Travis::getCvMat() {
-    if (!_quiet) printf("[Travis] in: getCvMat()\n");
-    return _img;
 }
 
 /************************************************************************/
@@ -29,22 +22,14 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
-        cv::Mat outChannels[3];
-        cv::subtract(bgrChannels[2], bgrChannels[0], outChannels[0]);  // BGR
-        cv::threshold(outChannels[0],outChannels[0],threshold,255,3);
-        outChannels[1] = outChannels[0];
-        outChannels[2] = outChannels[0];
-        cv::merge(outChannels, 3, _img);
+        cv::subtract(bgrChannels[2], bgrChannels[0], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
     } else if (strcmp(algorithm,"greenMinusRed")==0) {
         if (!_quiet) printf("[Travis] in: binarize(greenMinusRed, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
-        cv::Mat outChannels[3];
-        cv::subtract(bgrChannels[0], bgrChannels[2], outChannels[0]);  // BGR
-        cv::threshold(outChannels[0],outChannels[0],threshold,255,3);
-        outChannels[1] = outChannels[0];
-        outChannels[2] = outChannels[0];
-        cv::merge(outChannels, 3, _img);
+        cv::subtract(bgrChannels[0], bgrChannels[2], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
     } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
     return;
 }
@@ -57,11 +42,12 @@ void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
 
     //inspired on: getBiggestContour
     //and http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea
-    Mat cannyImg;
+    //Mat cannyImg;
     //Canny( _img, cannyImg, 30,100);
-    Canny( _img, cannyImg, 10,50,3);
-    dilate(cannyImg, cannyImg, Mat(),Point(-1,-1),1);
-    findContours( cannyImg, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    //Canny( _img, cannyImg, 10,50,3);
+    //dilate(cannyImg, cannyImg, Mat(),Point(-1,-1),1);
+    //findContours( cannyImg, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
     
     // sort contours
     std::sort(_contours.begin(), _contours.end(),compareContourAreas);
@@ -86,6 +72,19 @@ void Travis::getBlobsXY(const vector <Point>& locations) {
     //locations.push_back( minEllipse.center );
 
     return;
+}
+
+/************************************************************************/
+
+cv::Mat& Travis::getCvMat() {
+    if (!_quiet) printf("[Travis] in: getCvMat()\n");
+    // say we want to recompose the bin
+    /*cv::Mat outChannels[3];
+    outChannels[0] = _imgBin;
+    outChannels[1] = _imgBin;
+    outChannels[2] = _imgBin;
+    cv::merge(outChannels, 3, _img);*/
+    return _img;
 }
 
 /************************************************************************/

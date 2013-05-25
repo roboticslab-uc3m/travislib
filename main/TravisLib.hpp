@@ -79,6 +79,9 @@ protected:
     /** Store the image in cv::Mat format. */
     cv::Mat _img;
 
+    /** Store the binary image in cv::Mat format. */
+    cv::Mat _imgBin;
+
     /** Store the number of max blobs to keep. */
     int _maxNumBlobs;
 
