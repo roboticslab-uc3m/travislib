@@ -38,18 +38,13 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 
 void Travis::setMaxNumBlobs(const int& maxNumBlobs) {
     if (!_quiet) printf("[Travis] in: setMaxNumBlobs(%d)\n", maxNumBlobs);
+
     _maxNumBlobs = maxNumBlobs;
 
-    //inspired on: getBiggestContour
-    //and http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea
-    //Mat cannyImg;
-    //Canny( _img, cannyImg, 30,100);
-    //Canny( _img, cannyImg, 10,50,3);
-    //dilate(cannyImg, cannyImg, Mat(),Point(-1,-1),1);
-    //findContours( cannyImg, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    // [thanks getBiggestContour from smorante]
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
     
-    // sort contours
+    // [thanks http://stackoverflow.com/questions/13495207/opencv-c-sorting-contours-by-their-contourarea]
     std::sort(_contours.begin(), _contours.end(),compareContourAreas);
 
     RNG rng(12345);
