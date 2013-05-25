@@ -52,7 +52,7 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
     if (_contours.size() > maxNumBlobs)
         _contours.erase( _contours.begin()+maxNumBlobs, _contours.end() );
 
-    if( vizualization == 1) {
+    if( vizualization == 1 ) {
         RNG rng(12345);
         for( int i = 0; i < _contours.size(); i++ ) {
             Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
@@ -89,9 +89,49 @@ bool Travis::getBlobsXY(vector <Point>& locations) {
 }
 
 /************************************************************************/
-bool Travis::getBlobsAngle(vector <double>& angles) {
+bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization) {
+
     for( int i = 0; i < _contours.size(); i++ ) {
-        Rect sqCont = boundingRect( Mat(_contours[i]) );
+        //Rect sqCont = boundingRect( Mat(_contours[i]) );
+        //RotatedRect sqCont = boundingRect( Mat(_contours[i]) );
+        //RotatedRect minEllipse = fitEllipse(Mat(_contours[i]));
+        
+        // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
+        RotatedRect minRotatedRect = minAreaRect( Mat(_contours[i]) );
+        //?//if (angle < -45.) angle += 90.;
+        angles.push_back( minRotatedRect.angle );
+
+        if( vizualization==2 ){
+            cv::Point2f vertices[4];
+            minRotatedRect.points(vertices);
+            for(int i = 0; i < 4; ++i)
+                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+        }
+
+    }
+    return true;
+}
+
+/************************************************************************/
+bool Travis::getBlobsEllipseAngle(vector <double>& angles, const int& vizualization) {
+
+    for( int i = 0; i < _contours.size(); i++ ) {
+        //Rect sqCont = boundingRect( Mat(_contours[i]) );
+        //RotatedRect sqCont = boundingRect( Mat(_contours[i]) );
+        //RotatedRect minEllipse = fitEllipse(Mat(_contours[i]));
+        
+        // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
+        RotatedRect minRotatedRect = fitEllipse( Mat(_contours[i]) );
+        //?//if (angle < -45.) angle += 90.;
+        angles.push_back( minRotatedRect.angle );
+
+        if( vizualization==2 ){
+            cv::Point2f vertices[4];
+            minRotatedRect.points(vertices);
+            for(int i = 0; i < 4; ++i)
+                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+        }
+
     }
     return true;
 }
