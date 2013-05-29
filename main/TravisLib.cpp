@@ -31,6 +31,11 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
         cv::subtract(bgrChannels[0], bgrChannels[2], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
     } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
+    cv::Mat outChannels[3];
+    outChannels[0] = _imgBin;
+    outChannels[1] = _imgBin;
+    outChannels[2] = _imgBin;
+    cv::merge(outChannels, 3, _imgBin3);
     return;
 }
 
@@ -161,13 +166,8 @@ cv::Mat& Travis::getCvMat() {
 /************************************************************************/
 
 cv::Mat& Travis::getBinCvMat() {
-    if (!_quiet) printf("[Travis] in: getCvMat()\n");
+    if (!_quiet) printf("[Travis] in: getBinCvMat()\n");
     // say we want to recompose the bin
-    cv::Mat outChannels[3];
-    outChannels[0] = _imgBin;
-    outChannels[1] = _imgBin;
-    outChannels[2] = _imgBin;
-    cv::merge(outChannels, 3, _imgBin3);
     return _imgBin3;
 }
 
