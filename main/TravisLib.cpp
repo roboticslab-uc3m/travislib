@@ -156,13 +156,19 @@ bool Travis::getBlobsEllipseAngle(vector <double>& angles, const int& vizualizat
 
 cv::Mat& Travis::getCvMat() {
     if (!_quiet) printf("[Travis] in: getCvMat()\n");
+    return _img;
+}
+/************************************************************************/
+
+cv::Mat& Travis::getBinCvMat() {
+    if (!_quiet) printf("[Travis] in: getCvMat()\n");
     // say we want to recompose the bin
-    /*cv::Mat outChannels[3];
+    cv::Mat outChannels[3];
     outChannels[0] = _imgBin;
     outChannels[1] = _imgBin;
     outChannels[2] = _imgBin;
-    cv::merge(outChannels, 3, _img);*/
-    return _img;
+    cv::merge(outChannels, 3, _imgBin3);
+    return _imgBin3;
 }
 
 /************************************************************************/
