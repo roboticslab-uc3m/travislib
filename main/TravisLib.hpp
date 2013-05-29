@@ -85,6 +85,12 @@ public:
      */
     cv::Mat& getCvMat();
 
+    /**
+     * Get the binary image in cv::Mat format.
+     * @return the image, in cv::Mat format.
+     */
+    cv::Mat& getBinCvMat();
+
 protected:
     /** Store the verbosity level. */
     bool _quiet;
@@ -97,6 +103,7 @@ protected:
 
     /** Store the binary image in cv::Mat format. */
     cv::Mat _imgBin;
+    cv::Mat _imgBin3;
 
     /** Store the contours (blob contours). */
     vector < vector <Point> > _contours;
