@@ -22,13 +22,37 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
+        cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+    } else if (strcmp(algorithm,"redMinusBlue")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(redMinusBlue, %f)\n",threshold);
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[2], bgrChannels[0], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
     } else if (strcmp(algorithm,"greenMinusRed")==0) {
         if (!_quiet) printf("[Travis] in: binarize(greenMinusRed, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
+        cv::subtract(bgrChannels[1], bgrChannels[2], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+    } else if (strcmp(algorithm,"greenMinusBlue")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(greenMinusBlue, %f)\n",threshold);
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
+        cv::subtract(bgrChannels[1], bgrChannels[0], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+    } else if (strcmp(algorithm,"blueMinusRed")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(blueMinusRed, %f)\n",threshold);
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[2], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+    } else if (strcmp(algorithm,"blueMinusGreen")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(blueMinusGreen, %f)\n",threshold);
+        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
+        cv::subtract(bgrChannels[0], bgrChannels[1], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
     } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
     cv::Mat outChannels[3];
