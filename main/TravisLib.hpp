@@ -95,14 +95,14 @@ protected:
     /** Store the binary image fit for 3 layer sending in cv::Mat format. */
     cv::Mat _imgBin3;
 
+    /** Store the binary image fit for sending in cv::Mat format. */
+    cv::Mat _returnImg;
+
     /** Store the contours (blob contours). */
     vector < vector <Point> > _contours;
 
     /** Store the box. */
     vector < RotatedRect > _minRotatedRects;
-
-    /** Paint the bounding. */
-    void paintBounding(const int& vizualization);
 
 };
 
