@@ -149,21 +149,15 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
 
 cv::Mat& Travis::getCvMat(const int& image, const int& vizualization) {
     if (!_quiet) printf("[Travis] in: getCvMat(%d,%d)\n",image,vizualization);
-    paintBounding(vizualization);
-    if ( image == 1 ) return _imgBin3;
-    return _img;  // image == 0, etc
-}
 
-/************************************************************************/
-
-void Travis::paintBounding(const int& vizualization) {
-    if (!_quiet) printf("[Travis] in: paintBounding()\n");
+    if ( image == 1 ) _returnImg = _imgBin3;
+    else _returnImg = _img;
 
     if (( vizualization == 1 )||( vizualization == 3 )) {  // Contour
         RNG rng(12345);
         for( int i = 0; i < _contours.size(); i++ ) {
             Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-            drawContours( _img, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
+            drawContours( _returnImg, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
         }
     }
 
@@ -172,11 +166,11 @@ void Travis::paintBounding(const int& vizualization) {
             cv::Point2f vertices[4];
             _minRotatedRects[i].points(vertices);
             for(int i = 0; i < 4; ++i)
-                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+                cv::line(_returnImg, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
         }
     }
 
-    return;
+    return _returnImg;  // image == 0, etc
 }
 
 /************************************************************************/
