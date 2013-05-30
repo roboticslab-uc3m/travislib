@@ -99,7 +99,7 @@ protected:
     vector < vector <Point> > _contours;
 
     /** Store the box. */
-    RotatedRect _minRotatedRect;
+    vector < RotatedRect > _minRotatedRects;
 
     /** Paint the bounding. */
     void paintBounding(const int& vizualization);
