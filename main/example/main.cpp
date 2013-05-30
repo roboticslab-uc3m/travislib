@@ -24,11 +24,10 @@ int main(int argc, char *argv[]) {
     Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
     if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
-    travis.blobize(3, 1);  // max 3 blobs, vizualize: 0=None, 1=Contour, 2=n/a
+    travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
-    travis.getBlobsEllipseAngle(blobsAngle, 2); // return, vizualize: 0=None, 1=n/a, 2=minRotatedRect
-    //travis.getBlobsBoxAngle(blobsAngle, 2); // return, vizualize: 0=None, 1=n/a, 2=minRotatedRect
-    cv::Mat outImage = travis.getCvMat();
+    travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse
+    cv::Mat outImage = travis.getCvMat(0,2);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     // \end{Use of Travis}
     for( int i = 0; i < blobsXY.size(); i++)
         printf("XY %d: %d, %d.\n", i+1, blobsXY[i].x, blobsXY[i].y);

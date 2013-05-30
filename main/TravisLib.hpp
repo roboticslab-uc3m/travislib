@@ -3,12 +3,12 @@
 #ifndef __TRAVIS_LIB_HPP__
 #define __TRAVIS_LIB_HPP__
 
-#include <stdio.h>  // just printf
+#include <stdio.h>  // just printf and fprintf
 
-//#include "highgui.h" // to show windows
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+//#include "highgui.h" // to show windows
 
 using namespace std;
 using namespace cv;
@@ -55,41 +55,29 @@ public:
     /**
      * Use findContours to get what we use as blobs.
      * @param maxNumBlobs the number of max blobs to keep, the rest get truncated.
-     * @param vizualization param, 0=None, 1=Contour.
      */
-    void blobize(const int& maxNumBlobs, const int& vizualization);
+    void blobize(const int& maxNumBlobs);
 
     /**
-     * This function calculates X and Y.
+     * This function calculates X and Y as moments directly extracted from the stored contours.
      * @param locations returned.
      */
     bool getBlobsXY(vector <Point>& locations);
 
     /**
      * This function calculates ALPHA.
+     * @param method 0=box, 1=ellipse.
      * @param angles returned.
-     * @param vizualization param, 0=None, 2=minRotatedRect.
      */
-    bool getBlobsBoxAngle(vector <double>& angles, const int& vizualization);
-
-    /**
-     * This function calculates ALPHA.
-     * @param angles returned.
-     * @param vizualization param, 0=None, 2=minRotatedRect.
-     */
-    bool getBlobsEllipseAngle(vector <double>& angles, const int& vizualization);
+    bool getBlobsAngle(const int& method, vector <double>& angles);
 
     /**
      * Get the image in cv::Mat format.
+     * @param image
+     * @param vizualization param, 0=None, 1=Contour.
      * @return the image, in cv::Mat format.
      */
-    cv::Mat& getCvMat();
-
-    /**
-     * Get the binary image in cv::Mat format.
-     * @return the image, in cv::Mat format.
-     */
-    cv::Mat& getBinCvMat();
+    cv::Mat& getCvMat(const int& image, const int& vizualization);
 
 protected:
     /** Store the verbosity level. */
@@ -103,10 +91,16 @@ protected:
 
     /** Store the binary image in cv::Mat format. */
     cv::Mat _imgBin;
+
+    /** Store the binary image fit for 3 layer sending in cv::Mat format. */
     cv::Mat _imgBin3;
 
     /** Store the contours (blob contours). */
     vector < vector <Point> > _contours;
+
+    /** Paint the bounding. */
+    void paintBounding(const int& vizualization);
+
 };
 
 /**

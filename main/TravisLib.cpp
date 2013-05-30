@@ -65,8 +65,8 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 
 /************************************************************************/
 
-void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
-    if (!_quiet) printf("[Travis] in: blobize(%d,%d)\n",maxNumBlobs,vizualization);
+void Travis::blobize(const int& maxNumBlobs) {
+    if (!_quiet) printf("[Travis] in: blobize(%d)\n", maxNumBlobs);
 
     //dilate(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
     //erode(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
@@ -85,14 +85,6 @@ void Travis::blobize(const int& maxNumBlobs, const int& vizualization) {
     // Now truncate
     if (_contours.size() > maxNumBlobs)
         _contours.erase( _contours.begin()+maxNumBlobs, _contours.end() );
-
-    if( vizualization == 1 ) {
-        RNG rng(12345);
-        for( int i = 0; i < _contours.size(); i++ ) {
-            Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-            drawContours( _img, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
-        }
-    }
 
 }
 
@@ -123,76 +115,68 @@ bool Travis::getBlobsXY(vector <Point>& locations) {
 }
 
 /************************************************************************/
-bool Travis::getBlobsBoxAngle(vector <double>& angles, const int& vizualization) {
-    if (!_quiet) printf("[Travis] in: getBlobsBoxAngle(...,%d)\n",vizualization);
+bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
+    if (!_quiet) printf("[Travis] in: getBlobsBoxAngle(%d,...)\n", method);
 
     for( int i = 0; i < _contours.size(); i++ ) {
         //Rect sqCont = boundingRect( Mat(_contours[i]) );
         //RotatedRect sqCont = boundingRect( Mat(_contours[i]) );
-        //RotatedRect minEllipse = fitEllipse(Mat(_contours[i]));
         
-        // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
-        RotatedRect minRotatedRect = minAreaRect( Mat(_contours[i]) );
-        /*double angle = minRotatedRect.angle;
-        if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
-        angles.push_back( angle );*/
-        angles.push_back( minRotatedRect.angle+90.0 );
-
-        if( vizualization==2 ){
-            cv::Point2f vertices[4];
-            minRotatedRect.points(vertices);
-            for(int i = 0; i < 4; ++i)
-                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
-        }
-
-    }
-    return true;
-}
-
-/************************************************************************/
-bool Travis::getBlobsEllipseAngle(vector <double>& angles, const int& vizualization) {
-    if (!_quiet) printf("[Travis] in: getBlobsEllipseAngle(...,%d)\n",vizualization);
-
-    for( int i = 0; i < _contours.size(); i++ ) {
-        //Rect sqCont = boundingRect( Mat(_contours[i]) );
-        //RotatedRect sqCont = boundingRect( Mat(_contours[i]) );
-        //RotatedRect minEllipse = fitEllipse(Mat(_contours[i]));
-        
+        if (method == 0) {  // box
+            // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
+            RotatedRect minRotatedRect = minAreaRect( Mat(_contours[i]) );
+            /*double angle = minRotatedRect.angle;
+            if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
+            angles.push_back( angle );*/
+            angles.push_back( minRotatedRect.angle+90.0 );
+        } else if (method == 1) {  // ellipse
         // hopefully people will see this return false as a warning and treat before error.
-        if (_contours[i].size() < 5) {
-            fprintf(stderr,"[Travis] warning: returning false as ellipse would break with < 5 points.\n");
-            return false;  // else fitEllipse would cause break exit.
-        }
-
-        // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
-        RotatedRect minRotatedRect = fitEllipse( Mat(_contours[i]) );
-        //?//if (angle < -45.) angle += 90.;
-        angles.push_back( minRotatedRect.angle );
-
-        if( vizualization==2 ){
-            cv::Point2f vertices[4];
-            minRotatedRect.points(vertices);
-            for(int i = 0; i < 4; ++i)
-                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+            if (_contours[i].size() < 5) {
+                fprintf(stderr,"[Travis] warning: returning false as ellipse would break with < 5 points.\n");
+                return false;  // else fitEllipse would cause break exit.
+            }
+            // [thanks smorante]
+            RotatedRect minRotatedRect = fitEllipse( Mat(_contours[i]) );
+            //?//if (angle < -45.) angle += 90.;
+            angles.push_back( minRotatedRect.angle );        
         }
 
     }
     return true;
 }
 
-
 /************************************************************************/
 
-cv::Mat& Travis::getCvMat() {
-    if (!_quiet) printf("[Travis] in: getCvMat()\n");
-    return _img;
+cv::Mat& Travis::getCvMat(const int& image, const int& vizualization) {
+    if (!_quiet) printf("[Travis] in: getCvMat(%d,%d)\n",image,vizualization);
+    paintBounding(vizualization);
+    if ( image == 1 ) return _imgBin3;
+    return _img;  // image == 0, etc
 }
+
 /************************************************************************/
 
-cv::Mat& Travis::getBinCvMat() {
-    if (!_quiet) printf("[Travis] in: getBinCvMat()\n");
-    // say we want to recompose the bin
-    return _imgBin3;
+void Travis::paintBounding(const int& vizualization) {
+    if (!_quiet) printf("[Travis] in: paintBounding()\n");
+
+
+    if( vizualization == 1 ) {
+        RNG rng(12345);
+        for( int i = 0; i < _contours.size(); i++ ) {
+            Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+            drawContours( _img, _contours, i, color, 1, 8, CV_RETR_LIST, 0, Point() );
+        }
+    }
+
+
+/*        if( vizualization==2 ) {  // Box
+            cv::Point2f vertices[4];
+            minRotatedRect.points(vertices);
+            for(int i = 0; i < 4; ++i)
+                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+        }^*/
+
+    return;
 }
 
 /************************************************************************/
