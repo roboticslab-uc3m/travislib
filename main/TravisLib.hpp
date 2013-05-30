@@ -98,6 +98,9 @@ protected:
     /** Store the contours (blob contours). */
     vector < vector <Point> > _contours;
 
+    /** Store the box. */
+    RotatedRect _minRotatedRect;
+
     /** Paint the bounding. */
     void paintBounding(const int& vizualization);
 
