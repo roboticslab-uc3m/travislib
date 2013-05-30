@@ -124,11 +124,11 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
         
         if (method == 0) {  // box
             // [thanks http://felix.abecassis.me/2011/10/opencv-bounding-box-skew-angle/]
-            _minRotatedRect = minAreaRect( Mat(_contours[i]) );
+            _minRotatedRects.push_back( minAreaRect( Mat(_contours[i]) ) );
             /*double angle = minRotatedRect.angle;
             if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
             angles.push_back( angle );*/
-            angles.push_back( _minRotatedRect.angle+90.0 );
+            angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle+90.0 );
         } else if (method == 1) {  // ellipse
         // hopefully people will see this return false as a warning and treat before error.
             if (_contours[i].size() < 5) {
@@ -136,9 +136,9 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
                 return false;  // else fitEllipse would cause break exit.
             }
             // [thanks smorante]
-            _minRotatedRect = fitEllipse( Mat(_contours[i]) );
+            _minRotatedRects.push_back( fitEllipse( Mat(_contours[i]) ) );
             //?//if (angle < -45.) angle += 90.;
-            angles.push_back( _minRotatedRect.angle );        
+            angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle );        
         }
 
     }
@@ -168,10 +168,12 @@ void Travis::paintBounding(const int& vizualization) {
     }
 
     if (( vizualization == 2 )||( vizualization == 3 )) {  // Box
-        cv::Point2f vertices[4];
-        _minRotatedRect.points(vertices);
-        for(int i = 0; i < 4; ++i)
-            cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+        for(int i=0;i<_minRotatedRects.size();i++) {
+            cv::Point2f vertices[4];
+            _minRotatedRects[i].points(vertices);
+            for(int i = 0; i < 4; ++i)
+                cv::line(_img, vertices[i], vertices[(i + 1) % 4], cv::Scalar(255, 0, 0), 1, CV_AA);
+        }
     }
 
     return;
