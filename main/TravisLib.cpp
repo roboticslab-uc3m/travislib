@@ -70,8 +70,8 @@ void Travis::blobize(const int& maxNumBlobs) {
 
     //dilate(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
     //erode(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
-    dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), 4);
-    erode(_imgBin, _imgBin, Mat(), Point(-1,-1), 4);
+    dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), 15);
+    erode(_imgBin, _imgBin, Mat(), Point(-1,-1), 15);
 
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
