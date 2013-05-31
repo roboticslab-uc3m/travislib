@@ -65,13 +65,18 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
 
 /************************************************************************/
 
+void Travis::morphClosing(const int& closure) {
+    if (!_quiet) printf("[Travis] in: morphClosing(%d)\n", closure);
+
+    dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), closure);
+    erode(_imgBin, _imgBin, Mat(), Point(-1,-1), closure);
+
+}
+
+/************************************************************************/
+
 void Travis::blobize(const int& maxNumBlobs) {
     if (!_quiet) printf("[Travis] in: blobize(%d)\n", maxNumBlobs);
-
-    //dilate(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
-    //erode(_imgBin, _imgBin, Mat(),Point(-1,-1),1);
-    dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), 15);
-    erode(_imgBin, _imgBin, Mat(), Point(-1,-1), 15);
 
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
     findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
