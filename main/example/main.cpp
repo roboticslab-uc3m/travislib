@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
     if( !travis.setCvMat(inImage) ) return -1;
     travis.binarize("redMinusGreen",50);
+    travis.morphClosing(4);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
     bool ok = travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse; note check for return as can break
