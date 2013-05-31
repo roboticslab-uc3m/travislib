@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
     travis.getBlobsXY(blobsXY);
     bool ok = travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse; note check for return as can break
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
+    travis.release();  // Use to free memory and avoid leaks!
     // \end{Use of Travis}
     for( int i = 0; i < blobsXY.size(); i++)
         printf("XY %d: %d, %d.\n", i+1, blobsXY[i].x, blobsXY[i].y);

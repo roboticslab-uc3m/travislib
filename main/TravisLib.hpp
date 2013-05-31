@@ -85,6 +85,11 @@ public:
      */
     cv::Mat& getCvMat(const int& image, const int& vizualization);
 
+    /**
+     * Release _img and _imgBin3 to prevent memory leaks.
+     */
+    void release();
+
 protected:
     /** Store the verbosity level. */
     bool _quiet;
