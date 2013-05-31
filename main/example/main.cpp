@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     travis.binarize("redMinusGreen",50);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
-    travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse
+    bool ok = travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse; note check for return as can break
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     // \end{Use of Travis}
     for( int i = 0; i < blobsXY.size(); i++)
