@@ -54,7 +54,11 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[1], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+    } else if (strcmp(algorithm,"grayscale")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(grayscale, %f)\n",threshold);
+        cvtColor(_img,_imgBin,CV_BGR2GRAY);
     } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
+    // the result is bin but we store bin3 so we can colorfully paint on it
     cv::Mat outChannels[3];
     outChannels[0] = _imgBin;
     outChannels[1] = _imgBin;
