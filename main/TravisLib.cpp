@@ -17,7 +17,29 @@ bool Travis::setCvMat(const cv::Mat& image) {
 
 /************************************************************************/
 
-void Travis::binarize(const char* algorithm, const double& threshold) {
+bool Travis::binarize(const char* algorithm) {
+    if (strcmp(algorithm,"grayscale")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(grayscale)\n",threshold);
+        cvtColor(_img,_imgBin,CV_BGR2GRAY);
+    } else {
+        fprintf(stderr,"[Travis] error: Unrecognized algorithm with 0 args: %s.\n",algorithm);
+        return false;
+    }
+    // the result is bin but we store bin3 so we can colorfully paint on it
+    cv::Mat outChannels[3];
+    outChannels[0] = _imgBin;
+    outChannels[1] = _imgBin;
+    outChannels[2] = _imgBin;
+    cv::merge(outChannels, 3, _imgBin3);
+    outChannels[0].release();  // maybe this
+    outChannels[1].release();  //   is bad
+    outChannels[2].release();  //   practice??
+    return true;
+}
+
+/************************************************************************/
+
+bool Travis::binarize(const char* algorithm, const double& threshold) {
     if (strcmp(algorithm,"redMinusGreen")==0) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
@@ -54,10 +76,10 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[1], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
-    } else if (strcmp(algorithm,"grayscale")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(grayscale, %f)\n",threshold);
-        cvtColor(_img,_imgBin,CV_BGR2GRAY);
-    } else fprintf(stderr,"[Travis] warning: Unrecognized algorithm: %s.\n",algorithm);
+    } else {
+        fprintf(stderr,"[Travis] error: Unrecognized algorithm with 1 arg: %s.\n",algorithm);
+        return false;
+    }
     // the result is bin but we store bin3 so we can colorfully paint on it
     cv::Mat outChannels[3];
     outChannels[0] = _imgBin;
@@ -67,17 +89,40 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
     outChannels[0].release();  // maybe this
     outChannels[1].release();  //   is bad
     outChannels[2].release();  //   practice??
-    return;
+    return true;
+}
+
+/************************************************************************/
+
+bool Travis::binarize(const char* algorithm, const double& min, const double& max) {
+    if (strcmp(algorithm,"red")==0) {
+        if (!_quiet) printf("[Travis] in: red(redMinusGreen, %f, %f)\n",min,max);
+/*        cv::Mat bgrChannels[3];
+        cv::split(_img, bgrChannels);
+        cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
+        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);*/
+    } else {
+        fprintf(stderr,"[Travis] error: Unrecognized algorithm with 2 args: %s.\n",algorithm);
+        return false;
+    }
+    // the result is bin but we store bin3 so we can colorfully paint on it
+    cv::Mat outChannels[3];
+    outChannels[0] = _imgBin;
+    outChannels[1] = _imgBin;
+    outChannels[2] = _imgBin;
+    cv::merge(outChannels, 3, _imgBin3);
+    outChannels[0].release();  // maybe this
+    outChannels[1].release();  //   is bad
+    outChannels[2].release();  //   practice??
+    return true;
 }
 
 /************************************************************************/
 
 void Travis::morphClosing(const int& closure) {
     if (!_quiet) printf("[Travis] in: morphClosing(%d)\n", closure);
-
     dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), closure);
     erode(_imgBin, _imgBin, Mat(), Point(-1,-1), closure);
-
 }
 
 /************************************************************************/
