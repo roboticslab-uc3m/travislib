@@ -48,9 +48,21 @@ public:
     /**
      * Binarize the image.
      * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
+     */
+    bool binarize(const char* algorithm);
+    /**
+     * Binarize the image.
+     * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
      * @param threshold i.e. 50.
      */
-    void binarize(const char* algorithm, const double& threshold);
+    bool binarize(const char* algorithm, const double& threshold);
+    /**
+     * Binarize the image.
+     * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
+     * @param min i.e. 110.
+     * @param max i.e. 130.
+     */
+    bool binarize(const char* algorithm, const double& min, const double& max);
 
     /**
      * Morphologically closing the binarized image.
