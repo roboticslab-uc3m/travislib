@@ -120,6 +120,9 @@ protected:
     /** Store the image in cv::Mat format. */
     cv::Mat _img;
 
+    /** Store the hsv image in cv::Mat format. */
+    cv::Mat _imgHsv;
+
     /** Store the binary image in cv::Mat format. */
     cv::Mat _imgBin;
 

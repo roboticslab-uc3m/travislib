@@ -24,14 +24,15 @@ int main(int argc, char *argv[]) {
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
     if( !travis.setCvMat(inImage) ) return -1;
-    //if( !travis.binarize("grayscale") ) return -1;      // Choose between the
-    if( !travis.binarize("redMinusGreen",50) ) return -1; //   different overloadings.
+    //if( !travis.binarize("grayscale") ) return -1;      // Choose between
+    if( !travis.binarize("redMinusGreen",50) ) return -1; //   the different
+    //if( !travis.binarize("hue",0,10) ) return -1;    //   overloadings. :)
     travis.morphClosing(4);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
-    cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
+    cv::Mat outImage = travis.getCvMat(1,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
     // \end{Use of Travis}
     for( int i = 0; i < blobsXY.size(); i++)

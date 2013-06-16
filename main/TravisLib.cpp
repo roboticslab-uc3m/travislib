@@ -12,6 +12,9 @@ bool Travis::setCvMat(const cv::Mat& image) {
     }
     if (!_overwrite) _img = image.clone();  // safer
     else _img = image;  // faster and less memory
+
+    cvtColor(_img, _imgHsv, CV_BGR2HSV);
+
     return true;
 }
 
@@ -31,9 +34,6 @@ bool Travis::binarize(const char* algorithm) {
     outChannels[1] = _imgBin;
     outChannels[2] = _imgBin;
     cv::merge(outChannels, 3, _imgBin3);
-    outChannels[0].release();  // maybe this
-    outChannels[1].release();  //   is bad
-    outChannels[2].release();  //   practice??
     return true;
 }
 
@@ -45,37 +45,37 @@ bool Travis::binarize(const char* algorithm, const double& threshold) {
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"redMinusBlue")==0) {
         if (!_quiet) printf("[Travis] in: binarize(redMinusBlue, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[2], bgrChannels[0], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"greenMinusRed")==0) {
         if (!_quiet) printf("[Travis] in: binarize(greenMinusRed, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[1], bgrChannels[2], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"greenMinusBlue")==0) {
         if (!_quiet) printf("[Travis] in: binarize(greenMinusBlue, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[1], bgrChannels[0], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"blueMinusRed")==0) {
         if (!_quiet) printf("[Travis] in: binarize(blueMinusRed, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[2], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"blueMinusGreen")==0) {
         if (!_quiet) printf("[Travis] in: binarize(blueMinusGreen, %f)\n",threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[1], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);
+        cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else {
         fprintf(stderr,"[Travis] error: Unrecognized algorithm with 1 arg: %s.\n",algorithm);
         return false;
@@ -86,21 +86,19 @@ bool Travis::binarize(const char* algorithm, const double& threshold) {
     outChannels[1] = _imgBin;
     outChannels[2] = _imgBin;
     cv::merge(outChannels, 3, _imgBin3);
-    outChannels[0].release();  // maybe this
-    outChannels[1].release();  //   is bad
-    outChannels[2].release();  //   practice??
     return true;
 }
 
 /************************************************************************/
 
 bool Travis::binarize(const char* algorithm, const double& min, const double& max) {
-    if (strcmp(algorithm,"red")==0) {
-        if (!_quiet) printf("[Travis] in: red(redMinusGreen, %f, %f)\n",min,max);
-/*        cv::Mat bgrChannels[3];
-        cv::split(_img, bgrChannels);
-        cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
-        cv::threshold(_imgBin, _imgBin, threshold, 255, 3);*/
+    if (strcmp(algorithm,"hue")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(hue, %f, %f)\n",min,max);
+        cv::Mat hsvChannels[3];
+        split( _imgHsv, hsvChannels );
+        cv::threshold(hsvChannels[0], hsvChannels[0], max, 255, THRESH_TOZERO_INV);
+        cv::threshold(hsvChannels[0], _imgBin, min, 255, CV_THRESH_BINARY);
+        //cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
     } else {
         fprintf(stderr,"[Travis] error: Unrecognized algorithm with 2 args: %s.\n",algorithm);
         return false;
@@ -111,9 +109,6 @@ bool Travis::binarize(const char* algorithm, const double& min, const double& ma
     outChannels[1] = _imgBin;
     outChannels[2] = _imgBin;
     cv::merge(outChannels, 3, _imgBin3);
-    outChannels[0].release();  // maybe this
-    outChannels[1].release();  //   is bad
-    outChannels[2].release();  //   practice??
     return true;
 }
 
@@ -189,7 +184,7 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
         } else if (method == 1) {  // ellipse
         // hopefully people will see this return false as a warning and treat before error.
             if (_contours[i].size() < 5) {
-                fprintf(stderr,"[Travis] warning: returning false as ellipse would break with < 5 points.\n");
+                fprintf(stderr,"[Travis] error: returning false as ellipse would break with < 5 points.\n");
                 return false;  // else fitEllipse would cause break exit.
             }
             // [thanks smorante]
@@ -206,12 +201,9 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
 /************************************************************************/
 bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat) {
     if (!_quiet) printf("[Travis] in: getBlobsHSV(...)\n");
-    cv::Mat hsvImage;
-    cvtColor(_img, hsvImage, CV_BGR2HSV);
-    cv::Mat hsv_planes[3];
-    split( hsvImage, hsv_planes );
+    cv::Mat hsvChannels[3];
+    split( _imgHsv, hsvChannels );
     
-    hsvImage.release();
     return true;
 }
 
@@ -254,6 +246,7 @@ cv::Mat& Travis::getCvMat(const int& image, const int& vizualization) {
 
 void Travis::release() {
     _img.release();
+    _imgHsv.release();
     _imgBin3.release();
     return;
 }
