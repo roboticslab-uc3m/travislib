@@ -22,9 +22,10 @@ int main(int argc, char *argv[]) {
     vector<double> blobsAngle;
     vector<double> blobsHue,blobsSat,blobsVal;
     // \begin{Use of Travis}
-    Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
+    Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
     if( !travis.setCvMat(inImage) ) return -1;
-    travis.binarize("redMinusGreen",50); // redMinusGreen, grayscale...
+    travis.binarize("redMinusGreen",50);  // Choose between the
+    //travis.binarize("grayscale");       //   different overloadings.
     travis.morphClosing(4);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
