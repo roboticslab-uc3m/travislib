@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
     if( !travis.setCvMat(inImage) ) return -1;
-    travis.binarize("redMinusGreen",50);  // Choose between the
-    //travis.binarize("grayscale");       //   different overloadings.
+    //if( !travis.binarize("grayscale") ) return -1;      // Choose between the
+    if( !travis.binarize("redMinusGreen",50) ) return -1; //   different overloadings.
     travis.morphClosing(4);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
