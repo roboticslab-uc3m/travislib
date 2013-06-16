@@ -78,6 +78,14 @@ public:
     bool getBlobsAngle(const int& method, vector <double>& angles);
 
     /**
+     * This function calculates HSV.
+     * @param hues returned.
+     * @param vals returned.
+     * @param sats returned.
+     */
+    bool getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat);
+
+    /**
      * Get the image in cv::Mat format.
      * @param image
      * @param vizualization param, 0=None, 1=Contour.

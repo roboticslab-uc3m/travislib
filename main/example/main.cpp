@@ -20,15 +20,16 @@ int main(int argc, char *argv[]) {
 
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
+    vector<double> blobsHue,blobsSat,blobsVal;
     // \begin{Use of Travis}
     Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
     if( !travis.setCvMat(inImage) ) return -1;
-    travis.binarize("redMinusGreen",50);
-    //travis.binarize("grayscale",0);  // ok for sim
+    travis.binarize("redMinusGreen",50); // redMinusGreen, grayscale...
     travis.morphClosing(4);
     travis.blobize(3);  // max 3 blobs
     travis.getBlobsXY(blobsXY);
-    bool ok = travis.getBlobsAngle(1, blobsAngle);  // method: 0=box, 1=ellipse; note check for return as can break
+    if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
+    travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
     // \end{Use of Travis}
