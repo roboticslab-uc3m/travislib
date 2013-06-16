@@ -64,6 +64,9 @@ void Travis::binarize(const char* algorithm, const double& threshold) {
     outChannels[1] = _imgBin;
     outChannels[2] = _imgBin;
     cv::merge(outChannels, 3, _imgBin3);
+    outChannels[0].release();  // maybe this
+    outChannels[1].release();  //   is bad
+    outChannels[2].release();  //   practice??
     return;
 }
 
@@ -151,6 +154,19 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
         }
 
     }
+    return true;
+}
+
+
+/************************************************************************/
+bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat) {
+    if (!_quiet) printf("[Travis] in: getBlobsHSV(...)\n");
+    cv::Mat hsvImage;
+    cvtColor(_img, hsvImage, CV_BGR2HSV);
+    cv::Mat hsv_planes[3];
+    split( hsvImage, hsv_planes );
+    
+    hsvImage.release();
     return true;
 }
 
