@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     if( !travis.binarize("redMinusGreen",50) ) return -1; //   the different
     //if( !travis.binarize("hue",0,10) ) return -1;    //   overloadings. :)
     travis.morphClosing(4);
-    travis.blobize(3);  // max 3 blobs
+    travis.blobize(2);  // max 2 blobs
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
