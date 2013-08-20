@@ -167,6 +167,15 @@ bool Travis::getBlobsXY(vector <Point>& locations) {
 }
 
 /************************************************************************/
+bool Travis::getBlobsArea(vector <double>& areas) {
+    if (!_quiet) printf("[Travis] in: getBlobsArea(...)\n");
+
+    for( int i = 0; i < _contours.size(); i++ ) {
+        areas.push_back( fabs(contourArea(cv::Mat(_contours[i]))) );
+    }
+}
+
+/************************************************************************/
 bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
     if (!_quiet) printf("[Travis] in: getBlobsBoxAngle(%d,...)\n", method);
 

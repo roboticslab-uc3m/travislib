@@ -83,6 +83,12 @@ public:
     bool getBlobsXY(vector <Point>& locations);
 
     /**
+     * This function calculates the area of the blobs (contours).
+     * @param areas returned.
+     */
+    bool getBlobsArea(vector <double>& areas);
+
+    /**
      * This function calculates ALPHA.
      * @param method 0=box, 1=ellipse.
      * @param angles returned.
