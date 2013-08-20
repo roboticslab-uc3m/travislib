@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
 
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
+    vector<double> blobsArea;
     vector<double> blobsHue,blobsSat,blobsVal;
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
@@ -31,6 +32,7 @@ int main(int argc, char *argv[]) {
     travis.blobize(2);  // max 2 blobs
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
+    travis.getBlobsArea(blobsArea);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
@@ -39,6 +41,8 @@ int main(int argc, char *argv[]) {
         printf("XY %d: %d, %d.\n", i+1, blobsXY[i].x, blobsXY[i].y);
     for( int i = 0; i < blobsAngle.size(); i++)
         printf("Angle %d: %f.\n",i+1,blobsAngle[i]);
+    for( int i = 0; i < blobsArea.size(); i++)
+        printf("Area %d: %f.\n",i+1,blobsArea[i]);
 
     cv::namedWindow( "Input image", CV_WINDOW_AUTOSIZE );
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
