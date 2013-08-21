@@ -40,9 +40,11 @@ int main(int argc, char *argv[]) {
     for( int i = 0; i < blobsXY.size(); i++)
         printf("XY %d: %d, %d.\n", i+1, blobsXY[i].x, blobsXY[i].y);
     for( int i = 0; i < blobsAngle.size(); i++)
-        printf("Angle %d: %f.\n",i+1,blobsAngle[i]);
+        printf("Angle %d: %f.\n", i+1, blobsAngle[i]);
     for( int i = 0; i < blobsArea.size(); i++)
-        printf("Area %d: %f.\n",i+1,blobsArea[i]);
+        printf("Area %d: %f.\n", i+1, blobsArea[i]);
+    for( int i = 0; i < blobsHue.size(); i++)
+        printf("HSV %d: %f, %f, %f.\n",i+1, blobsHue[i], blobsSat[i], blobsVal[i]);
 
     cv::namedWindow( "Input image", CV_WINDOW_AUTOSIZE );
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
