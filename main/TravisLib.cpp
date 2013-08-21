@@ -213,6 +213,36 @@ bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <dou
     cv::Mat hsvChannels[3];
     split( _imgHsv, hsvChannels );
     
+    for( int i = 0; i < _contours.size(); i++ ) {
+
+        // \begin{mask}
+        vector <Point> biggestCH;
+        convexHull(_contours[i],biggestCH);
+
+        vector < vector <Point> > listCont;
+        listCont.push_back(biggestCH);
+
+        cv::Mat mask = Mat::zeros(_img.rows, _img.cols, CV_8UC1);
+        drawContours(mask, listCont,-1, Scalar(255),CV_FILLED);
+        // \end{mask}
+
+        Scalar h_mean, h_stddev;
+        cv::meanStdDev(hsvChannels[0], h_mean, h_stddev, mask);
+        Scalar s_mean, s_stddev;
+        cv::meanStdDev(hsvChannels[1], s_mean, s_stddev, mask);
+        Scalar v_mean, v_stddev;
+        cv::meanStdDev(hsvChannels[2], v_mean, v_stddev, mask);
+
+        hue.push_back( h_mean[0] );
+        val.push_back( v_mean[0] );
+        sat.push_back( s_mean[0] );
+
+        // \begin{mask}
+        mask.release();
+        // \end{mask}
+
+    }
+
     return true;
 }
 
