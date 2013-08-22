@@ -83,10 +83,16 @@ public:
     bool getBlobsXY(vector <Point>& locations);
 
     /**
-     * This function calculates the area of the blobs (contours).
+     * This function calculates the Area of the blobs (contours).
      * @param areas returned.
      */
     bool getBlobsArea(vector <double>& areas);
+
+    /**
+     * This function calculates the Solidity of the blobs (contours).
+     * @param solidities returned.
+     */
+    bool getBlobsSolidity(vector <double>& solidities);
 
     /**
      * This function calculates ALPHA, and _minRotatedRects as a side effect.

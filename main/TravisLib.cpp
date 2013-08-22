@@ -176,6 +176,15 @@ bool Travis::getBlobsArea(vector <double>& areas) {
 }
 
 /************************************************************************/
+bool Travis::getBlobsSolidity(vector <double>& solidities) {
+    if (!_quiet) printf("[Travis] in: getBlobsSolidity(...)\n");
+
+    for( int i = 0; i < _contours.size(); i++ ) {
+//        solidities.push_back( fabs(contourArea(cv::Mat(_contours[i]))) );
+    }
+}
+
+/************************************************************************/
 bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
     if (!_quiet) printf("[Travis] in: getBlobsAngle(%d,...)\n", method);
 
