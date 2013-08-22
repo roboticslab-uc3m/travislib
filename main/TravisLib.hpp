@@ -89,7 +89,7 @@ public:
     bool getBlobsArea(vector <double>& areas);
 
     /**
-     * This function calculates ALPHA.
+     * This function calculates ALPHA, and _minRotatedRects as a side effect.
      * @param method 0=box, 1=ellipse.
      * @param angles returned.
      */

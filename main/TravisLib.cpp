@@ -177,7 +177,7 @@ bool Travis::getBlobsArea(vector <double>& areas) {
 
 /************************************************************************/
 bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
-    if (!_quiet) printf("[Travis] in: getBlobsBoxAngle(%d,...)\n", method);
+    if (!_quiet) printf("[Travis] in: getBlobsAngle(%d,...)\n", method);
 
     for( int i = 0; i < _contours.size(); i++ ) {
         //Rect sqCont = boundingRect( Mat(_contours[i]) );
@@ -262,7 +262,7 @@ cv::Mat& Travis::getCvMat(const int& image, const int& vizualization) {
         }
     }
 
-    if (( vizualization == 2 )||( vizualization == 3 )) {  // Box
+    if (( vizualization == 2 )||( vizualization == 3 )) {  // Box, computed in getBlobsAngle
         for(int i=0;i<_minRotatedRects.size();i++) {
             cv::Point2f vertices[4];
             _minRotatedRects[i].points(vertices);
