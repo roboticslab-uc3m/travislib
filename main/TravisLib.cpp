@@ -180,7 +180,14 @@ bool Travis::getBlobsSolidity(vector <double>& solidities) {
     if (!_quiet) printf("[Travis] in: getBlobsSolidity(...)\n");
 
     for( int i = 0; i < _contours.size(); i++ ) {
-//        solidities.push_back( fabs(contourArea(cv::Mat(_contours[i]))) );
+
+        double areaCont = contourArea(_contours[i]);
+
+        vector <Point> biggestCH;
+        convexHull(_contours[i],biggestCH);
+        double areaCH = contourArea(biggestCH);
+
+        solidities.push_back( areaCont/areaCH );
     }
 }
 

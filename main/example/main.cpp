@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
 
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
-    vector<double> blobsArea, blobsAspectRatio, blobsAxisFirst, blobsAxisSecond, blobsRectangularity;
+    vector<double> blobsArea, blobsSolidity;
+    vector<double> blobsAspectRatio, blobsAxisFirst, blobsAxisSecond, blobsRectangularity;
     vector<double> blobsHue,blobsSat,blobsVal;
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
@@ -33,9 +34,10 @@ int main(int argc, char *argv[]) {
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsArea(blobsArea);
+    travis.getBlobsSolidity(blobsSolidity);
+    travis.getBlobsRectangularity(blobsRectangularity); // note: getBlobsAngle(...) must be called before, it computes minRects!
     travis.getBlobsAspectRatio(blobsAspectRatio,blobsAxisFirst,blobsAxisSecond);
         // note: getBlobsAngle(...) must be called before, it computes minRects!
-    travis.getBlobsRectangularity(blobsRectangularity); // note: getBlobsAngle(...) must be called before, it computes minRects!
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
@@ -46,6 +48,10 @@ int main(int argc, char *argv[]) {
         printf("Angle %d: %f.\n", i+1, blobsAngle[i]);
     for( int i = 0; i < blobsArea.size(); i++)
         printf("Area %d: %f.\n", i+1, blobsArea[i]);
+    for( int i = 0; i < blobsSolidity.size(); i++)
+        printf("Solidity %d: %f.\n", i+1, blobsSolidity[i]);
+    for( int i = 0; i < blobsSolidity.size(); i++)
+        printf("Rectangularity %d: %f.\n", i+1, blobsRectangularity[i]);
     for( int i = 0; i < blobsAspectRatio.size(); i++)
         printf("AspectRatio AxisFirst AxisSecond %d: %f, %f, %f.\n",
             i+1, blobsAspectRatio[i], blobsAxisFirst[i], blobsAxisSecond[i]);
