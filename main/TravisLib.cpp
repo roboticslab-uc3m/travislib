@@ -206,6 +206,14 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
     return true;
 }
 
+/************************************************************************/
+bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios) {
+    if (!_quiet) printf("[Travis] in: getBlobsAspectRatio(...)\n");
+    for( int i = 0; i < _minRotatedRects.size(); i++ ) {
+
+    }
+}
+
 
 /************************************************************************/
 bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat) {
