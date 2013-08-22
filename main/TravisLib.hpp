@@ -116,12 +116,16 @@ public:
     bool getBlobsRectangularity(vector <double>& rectangularities);
 
     /**
-     * This function calculates HSV means.
+     * This function calculates HSV Means and Standard Deviations.
      * @param hues returned.
      * @param vals returned.
      * @param sats returned.
+     * @param hueStdDevs returned.
+     * @param valStdDevs returned.
+     * @param satStdDevs returned.
      */
-    bool getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat);
+    bool getBlobsHSV(vector <double>& hues, vector <double>& vals, vector <double>& sats,
+        vector <double>& hueStdDevs, vector <double>& valStdDevs, vector <double>& satStdDevs);
 
     /**
      * Get the image in cv::Mat format.
