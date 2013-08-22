@@ -255,7 +255,8 @@ bool Travis::getBlobsRectangularity(vector <double>& rectangularities) {
 }
 
 /************************************************************************/
-bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat) {
+bool Travis::getBlobsHSV(vector <double>& hues, vector <double>& vals, vector <double>& sats,
+        vector <double>& hueStdDevs, vector <double>& valStdDevs, vector <double>& satStdDevs) {
     if (!_quiet) printf("[Travis] in: getBlobsHSV(...)\n");
     cv::Mat hsvChannels[3];
     split( _imgHsv, hsvChannels );
@@ -280,9 +281,13 @@ bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <dou
         Scalar v_mean, v_stddev;
         cv::meanStdDev(hsvChannels[2], v_mean, v_stddev, mask);
 
-        hue.push_back( h_mean[0] );
-        val.push_back( v_mean[0] );
-        sat.push_back( s_mean[0] );
+        hues.push_back( h_mean[0] );
+        vals.push_back( v_mean[0] );
+        sats.push_back( s_mean[0] );
+
+        hueStdDevs.push_back( h_stddev[0] );
+        valStdDevs.push_back( s_stddev[0] );
+        satStdDevs.push_back( v_stddev[0] );
 
         // \begin{mask}
         mask.release();
