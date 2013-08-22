@@ -96,10 +96,12 @@ public:
     bool getBlobsAngle(const int& method, vector <double>& angles);
 
     /**
-     * This function calculates the Aspect Ratios of the stored _minRotatedRects.
+     * This function calculates the Aspect Ratios and Axes of the stored _minRotatedRects.
      * @param aspectRatios returned.
+     * @param axisFirsts returned.
+     * @param axisSeconds returned.
      */
-    bool getBlobsAspectRatio(vector <double>& aspectRatios);
+    bool getBlobsAspectRatio(vector <double>& aspectRatios, vector <double>& axisFirsts, vector <double>& axisSeconds);
 
     /**
      * This function calculates the Rectangularities of the stored _minRotatedRects.
