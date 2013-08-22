@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
-    vector<double> blobsArea, blobsAspectRatio;
+    vector<double> blobsArea, blobsAspectRatio, blobsRectangularity;
     vector<double> blobsHue,blobsSat,blobsVal;
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsArea(blobsArea);
-    travis.getBlobsAspectRatio(blobsAspectRatio); // note: getBlobsAngle(...) must be called before, it computes minRects!!
+    travis.getBlobsAspectRatio(blobsAspectRatio); // note: getBlobsAngle(...) must be called before, it computes minRects!
+    travis.getBlobsRectangularity(blobsRectangularity); // note: getBlobsAngle(...) must be called before, it computes minRects!
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
