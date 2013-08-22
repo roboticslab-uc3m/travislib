@@ -218,6 +218,23 @@ bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios) {
     }
 }
 
+/************************************************************************/
+bool Travis::getBlobsRectangularity(vector <double>& rectangularities) {
+    if (!_quiet) printf("[Travis] in: getBlobsRectangularity(...)\n");
+    for( int i = 0; i < _minRotatedRects.size(); i++ ) {
+
+        double areaObj = contourArea(_contours[i]);
+
+        //double areaRect = _minRotatedRects[i].area();  // does not exist
+        Point2f vertices[4];
+        _minRotatedRects[i].points(vertices);
+        double length = cv::norm(vertices[1] - vertices[0]);
+        double width = cv::norm(vertices[3] - vertices[0]);
+        double areaRect = length * width;
+
+        rectangularities.push_back( areaObj / areaRect );
+    }
+}
 
 /************************************************************************/
 bool Travis::getBlobsHSV(vector <double>& hue, vector <double>& val, vector <double>& sat) {
