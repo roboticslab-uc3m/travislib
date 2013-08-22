@@ -207,7 +207,7 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
 }
 
 /************************************************************************/
-bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios) {
+bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios, vector <double>& axisFirsts, vector <double>& axisSeconds) {
     if (!_quiet) printf("[Travis] in: getBlobsAspectRatio(...)\n");
     for( int i = 0; i < _minRotatedRects.size(); i++ ) {
         Point2f vertices[4];
@@ -215,6 +215,8 @@ bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios) {
         double length = cv::norm(vertices[1] - vertices[0]);
         double width = cv::norm(vertices[3] - vertices[0]);
         aspectRatios.push_back( width / length );
+        axisFirsts.push_back( length );
+        axisSeconds.push_back( width );
     }
 }
 
