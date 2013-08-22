@@ -116,7 +116,7 @@ public:
     bool getBlobsRectangularity(vector <double>& rectangularities);
 
     /**
-     * This function calculates HSV.
+     * This function calculates HSV means.
      * @param hues returned.
      * @param vals returned.
      * @param sats returned.
