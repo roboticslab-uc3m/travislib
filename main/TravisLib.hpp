@@ -96,10 +96,16 @@ public:
     bool getBlobsAngle(const int& method, vector <double>& angles);
 
     /**
-     * This function calculates the Aspect ratios of the stored _minRotatedRects.
+     * This function calculates the Aspect Ratios of the stored _minRotatedRects.
      * @param aspectRatios returned.
      */
     bool getBlobsAspectRatio(vector <double>& aspectRatios);
+
+    /**
+     * This function calculates the Rectangularities of the stored _minRotatedRects.
+     * @param rectangularities returned.
+     */
+    bool getBlobsRectangularity(vector <double>& rectangularities);
 
     /**
      * This function calculates HSV.
