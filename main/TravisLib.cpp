@@ -205,7 +205,8 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
             /*double angle = minRotatedRect.angle;
             if (angle < -45.) angle += 90.;  // it just tends to go (-90,0)
             angles.push_back( angle );*/
-            angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle+90.0 );
+            //j//angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle+90.0 );
+
         } else if (method == 1) {  // ellipse
         // hopefully people will see this return false as a warning and treat before error.
             if (_contours[i].size() < 5) {
@@ -215,8 +216,16 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
             // [thanks smorante]
             _minRotatedRects.push_back( fitEllipse( Mat(_contours[i]) ) );
             //?//if (angle < -45.) angle += 90.;
-            angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle );        
+            //j//angles.push_back( _minRotatedRects[_minRotatedRects.size()-1].angle );        
         }
+        Point2f vertices[4];
+        _minRotatedRects[_minRotatedRects.size()-1].points(vertices);
+        Point2f p_0_1 = vertices[1] - vertices[0];
+        Point2f p_0_3 = vertices[3] - vertices[0];
+        if ( cv::norm(p_0_1) >  cv::norm(p_0_3) )
+            angles.push_back( - atan2( p_0_1.y , p_0_1.x )*180.0/M_PI );
+        else
+            angles.push_back( - atan2( p_0_3.y , p_0_3.x )*180.0/M_PI );
 
     }
     return true;
