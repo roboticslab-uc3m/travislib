@@ -223,9 +223,9 @@ bool Travis::getBlobsAngle(const int& method, vector <double>& angles) {
         Point2f p_0_1 = vertices[1] - vertices[0];
         Point2f p_0_3 = vertices[3] - vertices[0];
         if ( cv::norm(p_0_1) >  cv::norm(p_0_3) )
-            angles.push_back( - atan2( p_0_1.y , p_0_1.x )*180.0/M_PI );
-        else
             angles.push_back( - atan2( p_0_3.y , p_0_3.x )*180.0/M_PI );
+        else
+            angles.push_back( - atan2( p_0_1.y , p_0_1.x )*180.0/M_PI );
 
     }
     return true;
