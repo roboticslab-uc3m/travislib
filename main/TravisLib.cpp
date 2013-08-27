@@ -99,6 +99,13 @@ bool Travis::binarize(const char* algorithm, const double& min, const double& ma
         cv::threshold(hsvChannels[0], hsvChannels[0], max, 255, THRESH_TOZERO_INV);
         cv::threshold(hsvChannels[0], _imgBin, min, 255, CV_THRESH_BINARY);
         //cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
+
+        // begin: extra V filter
+        cv::threshold(hsvChannels[2], hsvChannels[2], 160, 255, THRESH_TOZERO_INV);
+        cv::threshold(hsvChannels[2], hsvChannels[2], 120, 255, CV_THRESH_BINARY);
+        cv::bitwise_and(hsvChannels[2],_imgBin,_imgBin);
+        // end: extra V filter
+        
     } else {
         fprintf(stderr,"[Travis] error: Unrecognized algorithm with 2 args: %s.\n",algorithm);
         return false;
