@@ -180,6 +180,7 @@ bool Travis::getBlobsArea(vector <double>& areas) {
     for( int i = 0; i < _contours.size(); i++ ) {
         areas.push_back( fabs(contourArea(cv::Mat(_contours[i]))) );
     }
+    return true;
 }
 
 /************************************************************************/
@@ -196,6 +197,7 @@ bool Travis::getBlobsSolidity(vector <double>& solidities) {
 
         solidities.push_back( areaCont/areaCH );
     }
+    return true;
 }
 
 /************************************************************************/
@@ -250,6 +252,7 @@ bool Travis::getBlobsAspectRatio(vector <double>& aspectRatios, vector <double>&
         axisFirsts.push_back( length );
         axisSeconds.push_back( width );
     }
+    return true;
 }
 
 /************************************************************************/
@@ -268,6 +271,7 @@ bool Travis::getBlobsRectangularity(vector <double>& rectangularities) {
 
         rectangularities.push_back( areaObj / areaRect );
     }
+    return true;
 }
 
 /************************************************************************/
