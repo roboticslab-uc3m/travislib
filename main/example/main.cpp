@@ -27,10 +27,10 @@ int main(int argc, char *argv[]) {
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
     if( !travis.setCvMat(inImage) ) return -1;
     //if( !travis.binarize("grayscale") ) return -1;      // Choose between
-    if( !travis.binarize("redMinusGreen",50) ) return -1; //   the different
+    if( !travis.binarize("greenMinusRed",20) ) return -1; //   the different
     //if( !travis.binarize("hue",0,10) ) return -1;    //   overloadings. :)
     travis.morphClosing(4);
-    travis.blobize(2);  // max 2 blobs
+    travis.blobize(1);  // max 2 blobs
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsArea(blobsArea);
@@ -39,12 +39,12 @@ int main(int argc, char *argv[]) {
     travis.getBlobsAspectRatio(blobsAspectRatio,blobsAxisFirst,blobsAxisSecond);
         // note: getBlobsAngle(...) must be called before, it computes minRects!
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev);
-    cv::Mat outImage = travis.getCvMat(0,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
+    cv::Mat outImage = travis.getCvMat(1,3);  // image: 0=color, 1=bw; vizualize: 0=None, 1=contour, 2=box, 3=both
     travis.release();  // Use to free memory and avoid leaks!
     // \end{Use of Travis}
     for( int i = 0; i < blobsXY.size(); i++)
         printf("XY %d: %d, %d.\n", i+1, blobsXY[i].x, blobsXY[i].y);
-    for( int i = 0; i < blobsAngle.size(); i++)
+/*    for( int i = 0; i < blobsAngle.size(); i++)
         printf("Angle %d: %f.\n", i+1, blobsAngle[i]);
     for( int i = 0; i < blobsArea.size(); i++)
         printf("Area %d: %f.\n", i+1, blobsArea[i]);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
             i+1, blobsAspectRatio[i], blobsAxisFirst[i], blobsAxisSecond[i]);
     for( int i = 0; i < blobsHue.size(); i++)
         printf("HSV HSVstdDevs %d: %f, %f, %f; %f %f %f.\n",
-            i+1, blobsHue[i], blobsSat[i], blobsVal[i], blobsHueStdDev[i],blobsSatStdDev[i],blobsValStdDev[i]);
+            i+1, blobsHue[i], blobsSat[i], blobsVal[i], blobsHueStdDev[i],blobsSatStdDev[i],blobsValStdDev[i]);*/
 
     cv::namedWindow( "Input image", CV_WINDOW_AUTOSIZE );
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
