@@ -21,9 +21,10 @@ bool Travis::setCvMat(const cv::Mat& image) {
 /************************************************************************/
 
 bool Travis::binarize(const char* algorithm) {
-    if (strcmp(algorithm,"grayscale")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(grayscale)\n",threshold);
+    if (strcmp(algorithm,"canny")==0) {
+        if (!_quiet) printf("[Travis] in: binarize(canny)\n");
         cvtColor(_img,_imgBin,CV_BGR2GRAY);
+        Canny(_imgBin,_imgBin, 30,40);
     } else {
         fprintf(stderr,"[Travis] error: Unrecognized algorithm with 0 args: %s.\n",algorithm);
         return false;
@@ -133,7 +134,8 @@ void Travis::blobize(const int& maxNumBlobs) {
     if (!_quiet) printf("[Travis] in: blobize(%d)\n", maxNumBlobs);
 
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
-    findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    //findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    findContours( _imgBin, _contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
     if (!_quiet) printf("[Travis] # of found contours: %zd.\n", _contours.size());
     
