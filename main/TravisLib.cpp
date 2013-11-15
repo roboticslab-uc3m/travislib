@@ -142,7 +142,8 @@ void Travis::blobize(const int& maxNumBlobs) {
     if (!_quiet) printf("[Travis] in: blobize(%d)\n", maxNumBlobs);
 
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
-    findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    //findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    findContours( _imgBin, _contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
     //findContours( _imgBin, _contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
     if (!_quiet) printf("[Travis] # of found contours: %zd.\n", _contours.size());
@@ -279,7 +280,7 @@ bool Travis::getBlobsRectangularity(vector <double>& rectangularities) {
         double width = cv::norm(vertices[3] - vertices[0]);
         double areaRect = length * width;
 
-        rectangularities.push_back( areaObj / areaRect );
+        rectangularities.push_back( ( areaObj / areaRect ) - (M_PI/4.0) ); // subtract the ideal circ/square rel. 
     }
     return true;
 }
