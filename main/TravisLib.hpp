@@ -71,6 +71,12 @@ public:
     void morphClosing(const int& closure);
 
     /**
+     * Morphologically opening the binarized image.
+     * @param opening i.e. 4 for a 100x100 image, 15 for higher resolution.
+     */
+    void morphOpening(const int& opening);
+
+    /**
      * Use findContours to get what we use as blobs.
      * @param maxNumBlobs the number of max blobs to keep, the rest get truncated.
      */
