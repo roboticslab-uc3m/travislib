@@ -130,12 +130,20 @@ void Travis::morphClosing(const int& closure) {
 
 /************************************************************************/
 
+void Travis::morphOpening(const int& opening) {
+    if (!_quiet) printf("[Travis] in: morphOpening(%d)\n", opening);
+    erode(_imgBin, _imgBin, Mat(), Point(-1,-1), opening);
+    dilate(_imgBin, _imgBin, Mat(), Point(-1,-1), opening);
+}
+
+/************************************************************************/
+
 void Travis::blobize(const int& maxNumBlobs) {
     if (!_quiet) printf("[Travis] in: blobize(%d)\n", maxNumBlobs);
 
     // [thanks getBiggestContour from smorante] note: here jgvictores decides to avoid Canny
-    //findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
-    findContours( _imgBin, _contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+    findContours( _imgBin, _contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    //findContours( _imgBin, _contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
     if (!_quiet) printf("[Travis] # of found contours: %zd.\n", _contours.size());
     
