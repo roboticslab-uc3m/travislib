@@ -462,7 +462,8 @@ void calcRectangularity(float& rectangularity, const vector <Point> biggestCont)
     areaRect = sqCont.area();
 
     //setting parameter
-    rectangularity = areaObj/areaRect;
+    rectangularity = areaObj/areaRect  - (M_PI/4.0);  // subtract the ideal circ/square rel. 
+
 }
 
 void calcMassCenter(float& massCenterLocX, float& massCenterLocY , const vector <Point> biggestCont){
