@@ -128,6 +128,8 @@ public:
      */
     bool getBlobsAspectRatio(vector <double>& aspectRatios, vector <double>& axisFirsts, vector <double>& axisSeconds);
 
+    bool getBlobsPerimeter(vector <double>& perimeters);
+
     /**
      * This function calculates the Rectangularities of the stored _minRotatedRects.
      * @param rectangularities returned.
