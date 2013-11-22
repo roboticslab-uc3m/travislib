@@ -46,6 +46,13 @@ public:
     bool setCvMat(const cv::Mat& image);
 
     /**
+     * Set the image in cv::Mat format.
+     * @param image the image to set, in cv::Mat format.
+     * @return true if the object was set successfully.
+     */
+    bool setBinCvMat(const cv::Mat& image);
+
+    /**
      * Binarize the image.
      * @param algorithm implemented: "redMinusGreen", "greenMinusRed".
      */
@@ -219,7 +226,7 @@ void calcRectangularity(float& rectangularity, const vector <Point> biggestCont)
  * @ingroup travis_functions
  * This function calculates the angle.
  */
-bool calcAngle(float& angle, const vector <Point>& biggestCont);
+void calcAngle(float& angle, const vector <Point> biggestCont);
 
 /**
  * @ingroup travis_functions
