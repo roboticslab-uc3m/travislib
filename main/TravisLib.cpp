@@ -474,6 +474,20 @@ void calcRectangularity(float& rectangularity, const vector <Point> biggestCont)
 
 }
 
+void calcAngle(float& angle, const vector <Point> biggestCont){
+    RotatedRect minRect = minAreaRect( Mat(biggestCont));
+
+    Point2f vertices[4];
+    minRect.points(vertices);
+    Point2f p_0_1 = vertices[1] - vertices[0];
+    Point2f p_0_3 = vertices[3] - vertices[0];
+    if ( cv::norm(p_0_1) >  cv::norm(p_0_3) )
+        angle = - atan2( p_0_3.y , p_0_3.x )*180.0/M_PI ;
+    else
+        angle = - atan2( p_0_1.y , p_0_1.x )*180.0/M_PI ;
+
+}
+
 void calcMassCenter(float& massCenterLocX, float& massCenterLocY , const vector <Point> biggestCont){
 
     Moments mu;

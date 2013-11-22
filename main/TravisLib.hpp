@@ -217,6 +217,12 @@ void calcRectangularity(float& rectangularity, const vector <Point> biggestCont)
 
 /**
  * @ingroup travis_functions
+ * This function calculates the angle.
+ */
+bool calcAngle(float& angle, const vector <Point>& biggestCont);
+
+/**
+ * @ingroup travis_functions
  * This function calculates the mass center.
  */
 void calcMassCenter(float& massCenterLocX, float& massCenterLocY , const vector <Point> biggestCont);
