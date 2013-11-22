@@ -159,6 +159,14 @@ void Travis::blobize(const int& maxNumBlobs) {
 }
 
 /************************************************************************/
+
+void Travis::pushContour(const vector <Point>& contour) {
+    if (!_quiet) printf("[Travis] in: pushContour()\n");
+    _contours.push_back( contour );
+
+}
+
+/************************************************************************/
 bool Travis::getBlobsXY(vector <Point>& locations) {
     if (!_quiet) printf("[Travis] in: getBlobsXY(...)\n");
 
