@@ -20,6 +20,29 @@ bool Travis::setCvMat(const cv::Mat& image) {
 
 /************************************************************************/
 
+bool Travis::setBinCvMat(const cv::Mat& image) {
+    if (!_quiet) printf("[Travis] in: setBinCvMat(...)\n");
+    if (!image.data) {
+        fprintf(stderr,"[Travis] error: No image data.\n");
+        return false;
+    }
+    if (!_overwrite) _imgBin = image.clone();  // safer
+    else _imgBin = image;  // faster and less memory
+
+    // the result is bin but we store bin3 so we can colorfully paint on it
+    cv::Mat outChannels[3];
+    outChannels[0] = _imgBin;
+    outChannels[1] = _imgBin;
+    outChannels[2] = _imgBin;
+    cv::merge(outChannels, 3, _imgBin3);
+
+    //cvtColor(_img, _imgHsv, CV_BGR2HSV);
+
+    return true;
+}
+
+/************************************************************************/
+
 bool Travis::binarize(const char* algorithm) {
     if (strcmp(algorithm,"canny")==0) {
         if (!_quiet) printf("[Travis] in: binarize(canny)\n");
@@ -198,6 +221,16 @@ bool Travis::getBlobsArea(vector <double>& areas) {
 
     for( int i = 0; i < _contours.size(); i++ ) {
         areas.push_back( fabs(contourArea(cv::Mat(_contours[i]))) );
+    }
+    return true;
+}
+
+/************************************************************************/
+bool Travis::getBlobsPerimeter(vector <double>& perimeters) {
+    if (!_quiet) printf("[Travis] in: getBlobsPerimeter(...)\n");
+
+    for( int i = 0; i < _contours.size(); i++ ) {
+        perimeters.push_back( arcLength(_contours[i],true) );
     }
     return true;
 }
