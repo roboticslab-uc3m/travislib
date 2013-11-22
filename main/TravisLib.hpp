@@ -83,6 +83,12 @@ public:
     void blobize(const int& maxNumBlobs);
 
     /**
+     * Push a contour.
+     * @param contour to be pushed on to the stack. Use with care.
+     */
+    void pushContour(const vector <Point>& contour);
+
+    /**
      * This function calculates X and Y as moments directly extracted from the stored contours.
      * @param locations returned.
      */
