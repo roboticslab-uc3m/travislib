@@ -18,6 +18,8 @@ int main(int argc, char *argv[]) {
     char* inImageName = argv[1];
     cv::Mat inImage = cv::imread(inImageName, 1);
 
+    travisCrop(0,0,50,50,inImage);
+
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
     vector<double> blobsArea, blobsSolidity;
@@ -26,11 +28,11 @@ int main(int argc, char *argv[]) {
     // \begin{Use of Travis}
     Travis travis(false, false);  // ::Travis(quiet=true, overwrite=true);
     if( !travis.setCvMat(inImage) ) return -1;
-    //if( !travis.binarize("grayscale") ) return -1;      // Choose between
-    if( !travis.binarize("greenMinusRed",20) ) return -1; //   the different
+    if( !travis.binarize("canny") ) return -1;      // Choose between
+    //if( !travis.binarize("greenMinusRed",20) ) return -1; //   the different
     //if( !travis.binarize("hue",0,10) ) return -1;    //   overloadings. :)
     travis.morphClosing(4);
-    travis.blobize(1);  // max 2 blobs
+    travis.blobize(2);  // max 2 blobs
     travis.getBlobsXY(blobsXY);
     if (! travis.getBlobsAngle(1,blobsAngle) ) return -1; // method: 0=box, 1=ellipse; note check for return as can break
     travis.getBlobsArea(blobsArea);
@@ -63,6 +65,9 @@ int main(int argc, char *argv[]) {
     cv::namedWindow( "Output image", CV_WINDOW_AUTOSIZE );
     imshow( "Input image", inImage );
     imshow( "Output image", outImage );
+    cv::waitKey(0);
+    cv::waitKey(0);
+    cv::waitKey(0);
     cv::waitKey(0);
     printf( "Done. Bye!\n");
 
