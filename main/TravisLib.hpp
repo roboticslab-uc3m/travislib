@@ -36,7 +36,7 @@ public:
      * @param quiet suppress messages displayed upon success/failure.
      * @param overwrite will not make a copy (faster, less memory), but will overwrite the image you pass.
      */
-    Travis(bool quiet=true, bool overwrite=true) : _quiet(quiet), _overwrite(overwrite) {}
+    Travis(bool quiet=true, bool overwrite=true) : _quiet(quiet), _overwrite(overwrite) { }
 
     /**
      * Set the image in cv::Mat format.
@@ -193,6 +193,13 @@ protected:
  * Can be used as a comparison function object for sorting.
  */
 bool compareContourAreas ( std::vector<cv::Point> contour1, std::vector<cv::Point> contour2 );
+
+/**
+ * Crop the image.
+ * @param image the image to set, in cv::Mat format.
+ * @return true if the object was set successfully.
+ */
+bool travisCrop(const int x, const int y, const int width, const int height, cv::Mat& img);
 
 /**
  * @ingroup travis_functions

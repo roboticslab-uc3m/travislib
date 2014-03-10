@@ -44,6 +44,7 @@ bool Travis::setBinCvMat(const cv::Mat& image) {
 /************************************************************************/
 
 bool Travis::binarize(const char* algorithm) {
+    if (!_quiet) printf("[Travis] in: binarize(%s)\n",algorithm);
     if (strcmp(algorithm,"canny")==0) {
         if (!_quiet) printf("[Travis] in: binarize(canny)\n");
         cvtColor(_img,_imgBin,CV_BGR2GRAY);
@@ -65,37 +66,37 @@ bool Travis::binarize(const char* algorithm) {
 
 bool Travis::binarize(const char* algorithm, const double& threshold) {
     if (strcmp(algorithm,"redMinusGreen")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(redMinusGreen, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[2], bgrChannels[1], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"redMinusBlue")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(redMinusBlue, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[2], bgrChannels[0], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"greenMinusRed")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(greenMinusRed, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[1], bgrChannels[2], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"greenMinusBlue")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(greenMinusBlue, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[1], bgrChannels[0], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"blueMinusRed")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(blueMinusRed, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[2], _imgBin);  // BGR
         cv::threshold(_imgBin, _imgBin, threshold, 255, THRESH_BINARY);
     } else if (strcmp(algorithm,"blueMinusGreen")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(blueMinusGreen, %f)\n",threshold);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f)\n",algorithm,threshold);
         cv::Mat bgrChannels[3];
         cv::split(_img, bgrChannels);
         cv::subtract(bgrChannels[0], bgrChannels[1], _imgBin);  // BGR
@@ -117,7 +118,7 @@ bool Travis::binarize(const char* algorithm, const double& threshold) {
 
 bool Travis::binarize(const char* algorithm, const double& min, const double& max) {
     if (strcmp(algorithm,"hue")==0) {
-        if (!_quiet) printf("[Travis] in: binarize(hue, %f, %f)\n",min,max);
+        if (!_quiet) printf("[Travis] in: binarize(%s, %f, %f)\n",algorithm,min,max);
         cv::Mat hsvChannels[3];
         split( _imgHsv, hsvChannels );
         cv::threshold(hsvChannels[0], hsvChannels[0], max, 255, THRESH_TOZERO_INV);
@@ -423,6 +424,18 @@ bool compareContourAreas ( std::vector<cv::Point> contour1, std::vector<cv::Poin
     double i = fabs( contourArea(cv::Mat(contour1)) );
     double j = fabs( contourArea(cv::Mat(contour2)) );
     return ( i > j );
+}
+
+/************************************************************************/
+
+bool travisCrop(const int x, const int y, const int width, const int height, cv::Mat& img) {
+    printf("[Travis] in: travisCrop(%d,%d,%d,%d)\n",x,y,width,height);
+    // Thanks: http://stackoverflow.com/questions/8267191/how-to-crop-a-cvmat-in-opencv
+ 
+    // Set up a rectangle to define your region of interest
+    cv::Rect myROI(x, y, width, height);
+    img = img(myROI);
+    return true;
 }
 
 /************************************************************************/
