@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     char* inImageName = argv[1];
     cv::Mat inImage = cv::imread(inImageName, 1);
 
-    travisCrop(0,0,50,50,inImage);
+    // travisCrop(0,0,50,50,inImage);  // pre-treat by cropping
 
     vector<cv::Point> blobsXY;
     vector<double> blobsAngle;
